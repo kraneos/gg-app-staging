@@ -1,0 +1,36 @@
+<md-toolbar color="primary">
+  <span>Debe</span>
+  <span class="fill-remaining"></span>
+  <!--<button md-fab color="accent" (click)="showOptions = !showOptions" *ngIf="!showOptions">
+    <md-icon class="md-24">filter_list</md-icon>
+  </button>-->
+</md-toolbar>
+<section>
+  <button md-icon-button (click)="previousDate()">
+      <md-icon class="md-24">skip_previous</md-icon>
+    </button>
+  <span style="margin-left: 20px;margin-right: 20px">{{options.date | date}}</span>
+  <button md-icon-button (click)="nextDate()">
+      <md-icon class="md-24">skip_next</md-icon>
+    </button>
+</section>
+<md-list>
+  <md-list-item *ngIf="showOptions">
+    <!--<md-input placeholder="Nro Poliza" [(ngModel)]="options.number"></md-input>-->
+    <md-input placeholder="Pagina" [(ngModel)]="options.page" type="number" min="1"></md-input>
+    <md-radio-group [(ngModel)]="options.limit">
+      <md-radio-button value="5">5</md-radio-button>
+      <md-radio-button value="10">10</md-radio-button>
+      <md-radio-button value="15">15</md-radio-button>
+    </md-radio-group>
+    <button md-raised-button (click)="filter()">Buscar</button>
+  </md-list-item>
+  <md-list-item *ngFor="let fee of fees">
+    <!--<md-icon md-list-icon *ngIf="fee.policy.client.icon === 1">home</md-icon>
+    <md-icon md-list-icon *ngIf="policy.icon === 2">user</md-icon>
+    <md-icon md-list-icon *ngIf="policy.icon === 3">car</md-icon>-->
+    <h3 md-line>{{fee | feeClientLastName}}</h3>
+    <p md-line>{{policy.object}}</p>
+    <p md-line>{{policy | policyClientName}}</p>
+  </md-list-item>
+</md-list>

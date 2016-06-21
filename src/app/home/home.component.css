@@ -1,0 +1,9 @@
+.fill-remaining {
+    flex: 1 1 auto;
+}
+section {
+    display: flex;
+    align-items: center;
+    background-color: #f7f7f7;
+    margin: 8px;
+}
