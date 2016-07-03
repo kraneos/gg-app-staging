@@ -6,7 +6,7 @@
   "scripts": {
     "start": "ng serve",
     "prod": "ng serve -prod --port",
-    "postinstall": "[ \"$NODE_ENV\" != production ] && exit 0; typings install",
+    "postinstall": "[ \"$NODE_ENV\" == production ] && exit 0; typings install",
     "lint": "tslint \"src/**/*.ts\"",
     "test": "ng test",
     "pree2e": "webdriver-manager update",
