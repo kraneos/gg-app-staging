@@ -14,7 +14,7 @@
       <md-icon class="md-24">skip_next</md-icon>
     </button>
 </section>
-<md-list>
+<md-nav-list>
   <md-list-item *ngIf="showOptions">
     <!--<md-input placeholder="Nro Poliza" [(ngModel)]="options.number"></md-input>-->
     <md-input placeholder="Pagina" [(ngModel)]="options.page" type="number" min="1"></md-input>
@@ -25,12 +25,22 @@
     </md-radio-group>
     <button md-raised-button (click)="filter()">Buscar</button>
   </md-list-item>
-  <md-list-item *ngFor="let fee of fees">
-    <!--<md-icon md-list-icon *ngIf="fee.policy.client.icon === 1">home</md-icon>
-    <md-icon md-list-icon *ngIf="policy.icon === 2">user</md-icon>
+  <!--<md-list-item *ngFor="let fee of fees">-->
+  <!--<md-icon md-list-icon *ngIf="policy.icon === 2">user</md-icon>
     <md-icon md-list-icon *ngIf="policy.icon === 3">car</md-icon>-->
-    <h3 md-line>{{fee | feeClientLastName}}</h3>
-    <p md-line>{{policy.object}}</p>
-    <p md-line>{{policy | policyClientName}}</p>
+  <md-list-item *ngFor="let fee of fees">
+    <span md-line>{{fee | feeClientLastName}}</span>
+    <span md-line>{{fee.policy.number}}</span>
+    <span md-line>{{fee.value | currency}}</span>
+    <a [routerLink]="['policies', fee.policy.objectId]">
+      <button md-icon-button>
+        <md-icon>{{fee | feePolicyIcon}}</md-icon>
+      </button>
+    </a>
+    <a [routerLink]="['clients', fee.policy.client.objectId]">
+      <button md-icon-button>
+        <md-icon>person</md-icon>
+      </button>
+    </a>
   </md-list-item>
-</md-list>
+</md-nav-list>

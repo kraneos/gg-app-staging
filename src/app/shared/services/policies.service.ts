@@ -22,4 +22,13 @@ export class PoliciesService {
             .map(this.parseService.extractArray)
             .catch(this.parseService.handleError);
     }
+
+    get(id: string): Observable<Policy> {
+        let url = 'classes/Policy/' + id;
+        url = url + '?include=risk.company,client';
+        return this.parseService
+            .get(url)
+            .map(this.parseService.extractObject)
+            .catch(this.parseService.handleError);
+    }
 }

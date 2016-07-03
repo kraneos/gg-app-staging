@@ -9,12 +9,14 @@ import {MdInput} from '@angular2-material/input';
 import {MdCheckbox} from '@angular2-material/checkbox';
 import {MdRadioButton, MdRadioGroup, MdRadioDispatcher} from '@angular2-material/radio';
 import {MdIcon, MdIconRegistry} from '@angular2-material/icon';
+import { ROUTER_DIRECTIVES } from '@angular/router';
 
 import { HomeOptions } from './home-options';
 import { Policy } from '../shared/domain/policy';
 import { Fee } from '../shared/domain/fee';
 import { PolicyClientNamePipe } from './policy-client-name.pipe';
 import { FeeClientLastNamePipe } from './fee-client-last-name.pipe';
+import { FeePolicyIconPipe } from './fee-policy-icon.pipe';
 
 import { PoliciesService } from '../shared/services/policies.service';
 import { FeesService } from '../shared/services/fees.service';
@@ -34,10 +36,11 @@ import { FeesService } from '../shared/services/fees.service';
     MdCheckbox,
     MdRadioGroup,
     MdRadioButton,
-    MdIcon
+    MdIcon,
+    ROUTER_DIRECTIVES
   ],
   providers: [MdIconRegistry, MdRadioDispatcher, PoliciesService, FeesService],
-  pipes: [PolicyClientNamePipe, FeeClientLastNamePipe]
+  pipes: [PolicyClientNamePipe, FeeClientLastNamePipe,FeePolicyIconPipe]
 })
 export class HomeComponent implements OnInit {
   options: HomeOptions;

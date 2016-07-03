@@ -29,6 +29,10 @@ export abstract class ParseService {
         let body = res.json();
         return body.results || [];
     }
+    extractObject(res: Response) {
+        let body = res.json();
+        return body || {};
+    }
     handleError(error: any) {
         let errMsg = (error.message) ? error.message :
             error.status ? `${error.status} - ${error.statusText}` : 'Server error';

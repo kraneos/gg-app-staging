@@ -15,7 +15,7 @@ export class FeesService {
     }
 
     query(opts: HomeOptions): Observable<Fee[]> {
-        var url = 'classes/Fee?skip=' + (+opts.limit * (opts.page - 1)) + '&limit=' + opts.limit;
+        let url = 'classes/Fee?skip=' + (+opts.limit * (opts.page - 1)) + '&limit=' + opts.limit;
         url = url + '&include=policy.client,policy.risk';
         if (opts.date) {
             var fromDate = new Date(opts.date.getFullYear(), opts.date.getMonth(), opts.date.getDate());
@@ -23,6 +23,14 @@ export class FeesService {
             toDate.setDate(toDate.getDate() + 1);
             url = url + '&where={"expirationDate":{"$gt":{"__type":"Date","iso":"' + fromDate.toJSON() + '"},"$lt":{"__type":"Date","iso":"' + toDate.toJSON() + '"}}}';
         }
+        return this.parseService
+            .get(url)
+            .map(this.parseService.extractArray)
+            .catch(this.parseService.handleError);
+    }
+
+    queryByPolicy(policyId: string): Observable<Fee[]> {
+        let url = 'classes/Fee?where={"policy":{"__type":"Pointer","className":"Policy","objectId":"' + policyId + '"}}';
         return this.parseService
             .get(url)
             .map(this.parseService.extractArray)

@@ -1,0 +1,36 @@
+<md-card>
+  <md-toolbar color="primary">Poliza</md-toolbar>
+  <md-card-content>
+    <form>
+      <p>
+        <md-input disabled placeholder="Compania" [(ngModel)]="policy.risk.company.name" style="width: 100%"></md-input>
+      </p>
+      <p>
+        <md-input disabled placeholder="Numero" [(ngModel)]="policy.number"></md-input>
+      </p>
+      <p *ngIf="vehicles.length > 0">
+        <md-input disabled placeholder="Patente" [(ngModel)]="vehicles[0].plate" style="width: 100%"></md-input>
+      </p>
+      <p *ngIf="vehicles.length > 0">
+        <md-input disabled placeholder="Modelo de vehiculo" [(ngModel)]="vehicles[0].vehicleModel.name" style="width: 100%"></md-input>
+      </p>
+      <!--<p *ngIf="integrals.length > 0">
+        <md-input disabled placeholder="Objeto" [(ngModel)]="integrals[0].plaste" style="width: 100%"></md-input>
+      </p>
+      <p *ngIf="integrals.length > 0">
+        <md-input disabled placeholder="Objeto" [(ngModel)]="integrals[0].vehicleModel.name" style="width: 100%"></md-input>
+      </p>-->
+      <p *ngIf="employees.length > 0">
+        <md-input disabled placeholder="Nombre Completo" [value]="employees[0].firstName + ' ' + employees[0].lastName" style="width: 100%"></md-input>
+      </p>
+      <p *ngIf="employees.length > 0">
+        <md-input disabled placeholder="DNI" [(ngModel)]="employees[0].dni" style="width: 100%"></md-input>
+      </p>
+    </form>
+    <md-list>
+      <md-list-item *ngFor="let fee of fees">
+        <h3 md-line>{{fee.number}} - {{fee.value | currency:'ARS':true:'1.2'}} - {{fee | feeStatusName}}</h3>
+      </md-list-item>
+    </md-list>
+  </md-card-content>
+</md-card>
