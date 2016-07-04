@@ -3,17 +3,17 @@
   <md-card-content>
     <form>
       <p>
-        <md-input disabled placeholder="Nombre" [(ngModel)]="client.firstName" style="width: 100%"></md-input>
+        <md-input disabled placeholder="Nombre" [(ngModel)]="client.firstName" name="firstName" style="width: 100%"></md-input>
       </p>
       <p>
-        <md-input disabled placeholder="Apellido" [(ngModel)]="client.lastName" style="width: 100%"></md-input>
+        <md-input disabled placeholder="Apellido" [(ngModel)]="client.lastName" name="lastName" style="width: 100%"></md-input>
       </p>
       <p>
-        <md-input disabled placeholder="Tipo Documento" [(ngModel)]="client.documentType"></md-input>
-        <md-input disabled placeholder="Documento" [(ngModel)]="client.document"></md-input>
+        <md-input disabled placeholder="Tipo Documento" [(ngModel)]="client.documentType" name="documentType"></md-input>
+        <md-input disabled placeholder="Documento" [(ngModel)]="client.document" name="document"></md-input>
       </p>
       <p>
-        <md-input #email disabled placeholder="Email" [(ngModel)]="client.email" align="end">
+        <md-input #email disabled placeholder="Email" [(ngModel)]="client.email" align="end" name="email">
           <span md-prefix>
             <md-icon [class.primary]="email.focused">email</md-icon>&nbsp;
           </span>

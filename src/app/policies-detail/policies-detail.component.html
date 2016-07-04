@@ -3,16 +3,16 @@
   <md-card-content>
     <form>
       <p>
-        <md-input disabled placeholder="Compania" [(ngModel)]="policy.risk.company.name" style="width: 100%"></md-input>
+        <md-input disabled placeholder="Compania" [(ngModel)]="policy.risk.company.name" style="width: 100%" name="companyName"></md-input>
       </p>
       <p>
-        <md-input disabled placeholder="Numero" [(ngModel)]="policy.number"></md-input>
+        <md-input disabled placeholder="Numero" [(ngModel)]="policy.number" name="number"></md-input>
       </p>
       <p *ngIf="vehicles.length > 0">
-        <md-input disabled placeholder="Patente" [(ngModel)]="vehicles[0].plate" style="width: 100%"></md-input>
+        <md-input disabled placeholder="Patente" [(ngModel)]="vehicles[0].plate" style="width: 100%" name="plate"></md-input>
       </p>
       <p *ngIf="vehicles.length > 0">
-        <md-input disabled placeholder="Modelo de vehiculo" [(ngModel)]="vehicles[0].vehicleModel.name" style="width: 100%"></md-input>
+        <md-input disabled placeholder="Modelo de vehiculo" [(ngModel)]="vehicles[0].vehicleModel.name" style="width: 100%" name="vehicleModel"></md-input>
       </p>
       <!--<p *ngIf="integrals.length > 0">
         <md-input disabled placeholder="Objeto" [(ngModel)]="integrals[0].plaste" style="width: 100%"></md-input>
@@ -21,10 +21,10 @@
         <md-input disabled placeholder="Objeto" [(ngModel)]="integrals[0].vehicleModel.name" style="width: 100%"></md-input>
       </p>-->
       <p *ngIf="employees.length > 0">
-        <md-input disabled placeholder="Nombre Completo" [value]="employees[0].firstName + ' ' + employees[0].lastName" style="width: 100%"></md-input>
+        <md-input disabled placeholder="Nombre Completo" [value]="employees[0].firstName + ' ' + employees[0].lastName" style="width: 100%" name="employeeName"></md-input>
       </p>
       <p *ngIf="employees.length > 0">
-        <md-input disabled placeholder="DNI" [(ngModel)]="employees[0].dni" style="width: 100%"></md-input>
+        <md-input disabled placeholder="DNI" [(ngModel)]="employees[0].dni" style="width: 100%" name="dni"></md-input>
       </p>
     </form>
     <md-list>

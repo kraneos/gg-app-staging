@@ -8,9 +8,10 @@ import {MD_LIST_DIRECTIVES} from '@angular2-material/list';
 import {MD_CARD_DIRECTIVES} from '@angular2-material/card';
 import {MdInput} from '@angular2-material/input';
 import {MdCheckbox} from '@angular2-material/checkbox';
-import {MdRadioButton, MdRadioGroup, MdRadioDispatcher} from '@angular2-material/radio';
+import {MdRadioButton, MdRadioGroup} from '@angular2-material/radio';
 import {MdIcon, MdIconRegistry} from '@angular2-material/icon';
 import { ROUTER_DIRECTIVES } from '@angular/router';
+import {MdUniqueSelectionDispatcher} from '@angular2-material/core';
 
 import { Client } from '../shared/domain/client';
 import { ClientsService } from '../shared/services/clients.service';
@@ -33,7 +34,7 @@ import { ClientsService } from '../shared/services/clients.service';
     MdIcon,
     ROUTER_DIRECTIVES
   ],
-  providers: [MdIconRegistry, MdRadioDispatcher, ClientsService]
+  providers: [MdIconRegistry, MdUniqueSelectionDispatcher, ClientsService]
 })
 export class ClientsDetailComponent implements OnInit, OnDestroy {
   client: Client;

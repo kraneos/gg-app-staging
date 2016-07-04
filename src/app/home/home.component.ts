@@ -7,9 +7,10 @@ import {MD_LIST_DIRECTIVES} from '@angular2-material/list';
 import {MD_CARD_DIRECTIVES} from '@angular2-material/card';
 import {MdInput} from '@angular2-material/input';
 import {MdCheckbox} from '@angular2-material/checkbox';
-import {MdRadioButton, MdRadioGroup, MdRadioDispatcher} from '@angular2-material/radio';
+import {MdRadioButton, MdRadioGroup} from '@angular2-material/radio';
 import {MdIcon, MdIconRegistry} from '@angular2-material/icon';
 import { ROUTER_DIRECTIVES } from '@angular/router';
+import {MdUniqueSelectionDispatcher} from '@angular2-material/core';
 
 import { HomeOptions } from './home-options';
 import { Policy } from '../shared/domain/policy';
@@ -39,7 +40,7 @@ import { FeesService } from '../shared/services/fees.service';
     MdIcon,
     ROUTER_DIRECTIVES
   ],
-  providers: [MdIconRegistry, MdRadioDispatcher, PoliciesService, FeesService],
+  providers: [MdIconRegistry, MdUniqueSelectionDispatcher, PoliciesService, FeesService],
   pipes: [PolicyClientNamePipe, FeeClientLastNamePipe,FeePolicyIconPipe]
 })
 export class HomeComponent implements OnInit {
