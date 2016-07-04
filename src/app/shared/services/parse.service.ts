@@ -5,13 +5,10 @@ import { CurrentUser } from '../domain/current-user';
 
 @Injectable()
 export abstract class ParseService {
-    user: CurrentUser;
     /**
      *
      */
     constructor(private http: Http) {
-        let userStr = localStorage.getItem('segguUser');
-        this.user = JSON.parse(userStr);
     }
     get(url: string, options?: RequestOptionsArgs): Observable<Response> {
         return this.http.get(this.getUrl(url), this.getOptions(options));
@@ -45,8 +42,10 @@ export abstract class ParseService {
     private getOptions(options?: RequestOptionsArgs) {
         var opts = options || new RequestOptions({ headers: new Headers() });
         opts.headers.append('X-Parse-Application-Id', 'seggu-api');
-        if (this.user) {
-            opts.headers.append('X-Parse-Session-Token', this.user.sessionToken);
+        let userStr = localStorage.getItem('segguUser');
+        let user = JSON.parse(userStr);
+        if (user) {
+            opts.headers.append('X-Parse-Session-Token', user.sessionToken);
         }
         return opts;
     }
