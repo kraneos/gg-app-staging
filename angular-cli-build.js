@@ -22,7 +22,7 @@ module.exports = function(defaults) {
     ],
     polyfills: [
       'vendor/es6-shim/es6-shim.js',
-      'vendor/intl/dist/intl.js',
+      'vendor/intl/dist/Intl.js',
       'vendor/intl/locale-data/jsonp/es-AR.js',
       'vendor/reflect-metadata/Reflect.js',
       'vendor/systemjs/dist/system.src.js',
