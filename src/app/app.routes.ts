@@ -1,6 +1,7 @@
 import { provideRouter, RouterConfig } from '@angular/router';
 import { HomeComponent } from './home/home.component';
 import { ClientsComponent } from './clients/clients.component';
+import { PoliciesComponent } from './policies/policies.component';
 import { LoginComponent } from './login/login.component';
 import { AuthGuard } from './auth.guard';
 import { LoginService } from './shared/services/login.service';
@@ -13,7 +14,8 @@ export const routes: RouterConfig = [
     { path: 'clients', component: ClientsComponent, canActivate: [AuthGuard] },
     { path: 'clients/:id', component: ClientsDetailComponent, canActivate: [AuthGuard] },
     { path: 'policies/:id', component: PoliciesDetailComponent, canActivate: [AuthGuard] },
-    { path: 'login', component: LoginComponent }
+    { path: 'login', component: LoginComponent },
+    { path: 'policies', component: PoliciesComponent, canActivate: [AuthGuard] }
 ];
 
 export const APP_ROUTER_PROVIDERS = [

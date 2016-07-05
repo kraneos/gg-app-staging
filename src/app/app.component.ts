@@ -34,11 +34,13 @@ import {MdUniqueSelectionDispatcher} from '@angular2-material/core';
 export class AppComponent {
   views: Object[] = [
     {
+      url: "policies",
       name: "Polizas",
       description: "Visualiza las polizas",
       icon: "assignment"
     },
     {
+      url: "clients",
       name: "Clientes",
       description: "Visualiza tus clientes",
       icon: "account_box"
