@@ -6,6 +6,11 @@
         <span md-line>{{view.name}}</span>
         <span md-line class="secondary">{{view.description}}</span>
       </a>
+      <a md-list-item (click)="logout()">
+        <md-icon md-list-icon>exit_to_app</md-icon>
+        <span md-line>Cerrar Sesion</span>
+        <span md-line class="secondary">Cierra la sesion actual.</span>
+      </a>
     </md-nav-list>
   </md-sidenav>
   <md-toolbar color="primary">

@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { ROUTER_DIRECTIVES } from '@angular/router';
+import { ROUTER_DIRECTIVES, Router } from '@angular/router';
 import {MdToolbar} from '@angular2-material/toolbar';
 import {MdButton} from '@angular2-material/button';
 import {MD_SIDENAV_DIRECTIVES} from '@angular2-material/sidenav';
@@ -10,6 +10,10 @@ import {MdCheckbox} from '@angular2-material/checkbox';
 import {MdRadioButton, MdRadioGroup} from '@angular2-material/radio';
 import {MdIcon, MdIconRegistry} from '@angular2-material/icon';
 import {MdUniqueSelectionDispatcher} from '@angular2-material/core';
+
+import { Observable } from 'rxjs/Observable';
+
+import { LoginService } from './shared/services/login.service';
 
 @Component({
   moduleId: module.id,
@@ -29,7 +33,7 @@ import {MdUniqueSelectionDispatcher} from '@angular2-material/core';
     MdIcon,
     ROUTER_DIRECTIVES
   ],
-  providers: [MdIconRegistry, MdUniqueSelectionDispatcher],
+  providers: [MdIconRegistry, MdUniqueSelectionDispatcher, LoginService],
 })
 export class AppComponent {
   views: Object[] = [
@@ -46,4 +50,24 @@ export class AppComponent {
       icon: "account_box"
     }
   ];
+
+  constructor(private router: Router, private loginService: LoginService) { }
+
+  logout() {
+    this.loginService.logout()
+      .subscribe(
+      res => {
+        localStorage.removeItem('segguUser');
+        this.router.navigate(['/login']);
+      },
+      error => onError
+      );
+
+    function onError(error) {
+      this.error = error.message;
+      this.showError = true;
+      return Observable.throw(error.message);
+    }
+  }
+
 }

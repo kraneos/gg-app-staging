@@ -7,22 +7,28 @@ import { CurrentUser } from '../domain/current-user';
 
 @Injectable()
 export class LoginService {
-    /**
-     *
-     */
-    constructor(private parseService: ParseService) {
+  /**
+   *
+   */
+  constructor(private parseService: ParseService) {
 
-    }
+  }
 
-    login(username, password): Observable<CurrentUser> {
-        return this.parseService
-            .get('login?username=' + username + '&password=' + password)
-            .map(this.extractLoginData)
-            .catch(this.parseService.handleError);;
-    }
+  login(username, password): Observable<CurrentUser> {
+    return this.parseService
+      .get('login?username=' + username + '&password=' + password)
+      .map(this.extractLoginData)
+      .catch(this.parseService.handleError);
+  }
 
-    private extractLoginData(res: Response) {
-        let body = res.json();
-        return body || {};
-    }
+  logout(): Observable<Response> {
+    return this.parseService
+      .post('logout', null)
+      .catch(this.parseService.handleError);
+  }
+
+  private extractLoginData(res: Response) {
+    let body = res.json();
+    return body || {};
+  }
 }
