@@ -20,9 +20,11 @@ export class FeesService {
         url = url + '&order=expirationDate';
         if (opts.date) {
             var fromDate = new Date(opts.date.getFullYear(), opts.date.getMonth(), opts.date.getDate());
+            fromDate.setUTCHours(0);
             var toDate = new Date(fromDate.valueOf());
             toDate.setDate(toDate.getDate() + 1);
-            url = url + '&where={"expirationDate":{"$gt":{"__type":"Date","iso":"' + fromDate.toJSON() + '"},"$lt":{"__type":"Date","iso":"' + toDate.toJSON() + '"}}}';
+            toDate.setUTCHours(0);
+            url = url + '&where={"expirationDate":{"$gte":{"__type":"Date","iso":"' + fromDate.toJSON() + '"},"$lt":{"__type":"Date","iso":"' + toDate.toJSON() + '"}}}';
         }
         return this.parseService
             .get(url)
