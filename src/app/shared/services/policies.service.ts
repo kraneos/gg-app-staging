@@ -15,7 +15,7 @@ export class PoliciesService {
     }
 
     query(opts: PoliciesOptions): Observable<Policy[]> {
-        var url = 'classes/Policy?skip=' + (+opts.limit * (opts.page - 1)) + '&limit=' + opts.limit;
+        let url = 'classes/Policy?skip=' + (+opts.limit * (opts.page - 1)) + '&limit=' + opts.limit;
         url = url + '&include=client,risk';
         return this.parseService
             .get(url)
