@@ -23,6 +23,7 @@ const packages: any = {
   '@angular2-material/radio': { format: 'cjs', defaultExtension: 'js', main: 'radio.js' },
   '@angular2-material/sidenav': { format: 'cjs', defaultExtension: 'js', main: 'sidenav.js' },
   '@angular2-material/toolbar': { format: 'cjs', defaultExtension: 'js', main: 'toolbar.js' },
+  '@angular2-material/progress-circle': { format: 'cjs', defaultExtension: 'js', main: 'progress-circle.js' },
   'parse': { format: 'cjs', defaultExtension: 'js', main: 'index.js' }
 };
 

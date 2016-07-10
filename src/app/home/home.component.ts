@@ -9,6 +9,7 @@ import {MdInput} from '@angular2-material/input';
 import {MdCheckbox} from '@angular2-material/checkbox';
 import {MdRadioButton, MdRadioGroup} from '@angular2-material/radio';
 import {MdIcon, MdIconRegistry} from '@angular2-material/icon';
+import { MD_PROGRESS_CIRCLE_DIRECTIVES } from '@angular2-material/progress-circle';
 import { ROUTER_DIRECTIVES } from '@angular/router';
 import {MdUniqueSelectionDispatcher} from '@angular2-material/core';
 
@@ -38,7 +39,8 @@ import { FeesService } from '../shared/services/fees.service';
     MdRadioGroup,
     MdRadioButton,
     MdIcon,
-    ROUTER_DIRECTIVES
+    ROUTER_DIRECTIVES,
+    MD_PROGRESS_CIRCLE_DIRECTIVES
   ],
   providers: [MdIconRegistry, MdUniqueSelectionDispatcher, PoliciesService, FeesService],
   pipes: [PolicyClientNamePipe, FeeClientLastNamePipe, FeePolicyIconPipe]
@@ -49,6 +51,7 @@ export class HomeComponent implements OnInit {
   showOptions: boolean;
   test: number;
   dateStr: string;
+  hideProgress: boolean;
 
   constructor(private policiesService: PoliciesService, private feesService: FeesService) { }
 
@@ -93,11 +96,17 @@ export class HomeComponent implements OnInit {
   }
 
   filter() {
+    this.hideProgress = false;
     this.feesService.query(this.options)
       .subscribe(
-      fees => this.fees = fees,
-      error => this.onError
-      );
+      fees => {
+        this.fees = fees
+        this.hideProgress = true;
+      },
+      error => {
+        this.onError
+        this.hideProgress = true;
+      });
     this.showOptions = false;
   }
 

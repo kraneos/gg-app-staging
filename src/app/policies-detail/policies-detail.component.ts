@@ -65,6 +65,7 @@ export class PoliciesDetailComponent implements OnInit, OnDestroy {
   vehicles: Vehicle[];
   integrals: Integral[];
   employees: Employee[];
+  hideProgress: boolean;
   private sub: any;
   private VEHICLE_RISK_TYPES = [1];
   private INTEGRAL_RISK_TYPES = [2];
@@ -96,32 +97,54 @@ export class PoliciesDetailComponent implements OnInit, OnDestroy {
           this.policy = policy;
           this.feesService.queryByPolicy(id)
             .subscribe(
-            fees => this.fees = fees,
-            error => this.onError
-            );
+            fees => {
+              this.fees = fees
+              this.hideProgress = this.fees !== null && (this.vehicles !== null || this.employees !== null || this.integrals !== null);
+            },
+            error => {
+              this.onError
+              this.hideProgress = true;
+            });
 
           if (this.validateAgainstArray(this.VEHICLE_RISK_TYPES, this.policy.risk.riskType)) {
             this.vehiclesService.query(id)
               .subscribe(
-              vehicles => this.vehicles = vehicles,
-              error => this.onError
-              );
+              vehicles => {
+                this.vehicles = vehicles
+                this.hideProgress = this.fees !== null && (this.vehicles !== null || this.employees !== null || this.integrals !== null);
+              },
+              error => {
+                this.onError
+                this.hideProgress = true;
+              });
           } else if (this.validateAgainstArray(this.INTEGRAL_RISK_TYPES, this.policy.risk.riskType)) {
             this.integralsService.query(id)
               .subscribe(
-              integrals => this.integrals = integrals,
-              error => this.onError
-              );
+              integrals => {
+                this.integrals = integrals
+                this.hideProgress = this.fees !== null && (this.vehicles !== null || this.employees !== null || this.integrals !== null);
+              },
+              error => {
+                this.onError
+                this.hideProgress = true;
+              });
           } else if (this.validateAgainstArray(this.EMPLOYEE_RISK_TYPES, this.policy.risk.riskType)) {
             this.employeesService.query(id)
               .subscribe(
-              employees => this.employees = employees,
-              error => this.onError
-              );
+              employees => {
+                this.employees = employees
+                this.hideProgress = this.fees !== null && (this.vehicles !== null || this.employees !== null || this.integrals !== null);
+              },
+              error => {
+                this.onError
+                this.hideProgress = true;
+              });
           }
         },
-        error => this.onError
-        );
+        error => {
+          this.onError
+          this.hideProgress = true;
+        });
     });
   }
 

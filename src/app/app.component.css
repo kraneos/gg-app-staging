@@ -45,3 +45,7 @@ md-card {
   display: flex;
   flex-flow: row wrap;
 }
+
+[hidden] {
+  display: none !important;
+}

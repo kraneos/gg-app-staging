@@ -39,6 +39,7 @@ import { ClientsService } from '../shared/services/clients.service';
 export class ClientsDetailComponent implements OnInit, OnDestroy {
   client: Client;
   private sub: any;
+  hideProgress: boolean;
 
   constructor(
     private route: ActivatedRoute,
@@ -51,9 +52,13 @@ export class ClientsDetailComponent implements OnInit, OnDestroy {
       let id = params['id'];
       this.clientsService.get(id)
         .subscribe(
-        client => this.client = client,
-        error => this.onError
-        );
+        client => {
+          this.client = client;
+          this.hideProgress = true;
+        }, error => {
+          this.onError
+          this.hideProgress = true;
+        });
     });
   }
 

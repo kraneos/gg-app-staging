@@ -41,6 +41,7 @@
   <!--<md-list-item *ngFor="let fee of fees">-->
   <!--<md-icon md-list-icon *ngIf="policy.icon === 2">user</md-icon>
     <md-icon md-list-icon *ngIf="policy.icon === 3">car</md-icon>-->
+  <md-progress-circle mode="indeterminate" *ngIf="!hideProgress"></md-progress-circle>
   <md-list-item *ngFor="let fee of fees">
     <span md-line>{{fee | feeClientLastName}}</span>
     <span md-line>{{fee.policy.number}}</span>
