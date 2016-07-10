@@ -6,13 +6,26 @@
   </button>-->
 </md-toolbar>
 <section>
-  <button md-icon-button (click)="previousDate()">
-      <md-icon class="md-24">skip_previous</md-icon>
-    </button>
-  <span style="margin-left: 20px;margin-right: 20px">{{options.date | date}}</span>
-  <button md-icon-button (click)="nextDate()">
-      <md-icon class="md-24">skip_next</md-icon>
-    </button>
+  <form>
+    <table>
+      <tr>
+        <td>
+          <button md-icon-button (click)="previousDate()">
+            <md-icon class="md-24">skip_previous</md-icon>
+          </button>
+        </td>
+        <td>
+          <!--<input type="date" name="fecha2" [ngModel]="dateStr" (ngModelChange)="onDateChange($event)">-->
+          <md-input placeholder="Fecha" [ngModel]="dateStr" (ngModelChange)="onDateChange($event)" type="date" name="fecha"></md-input>
+        </td>
+        <td>
+          <button md-icon-button (click)="nextDate()">
+            <md-icon class="md-24">skip_next</md-icon>
+          </button>
+        </td>
+      </tr>
+    </table>
+  </form>
 </section>
 <md-nav-list>
   <md-list-item *ngIf="showOptions">

@@ -41,21 +41,50 @@ import { FeesService } from '../shared/services/fees.service';
     ROUTER_DIRECTIVES
   ],
   providers: [MdIconRegistry, MdUniqueSelectionDispatcher, PoliciesService, FeesService],
-  pipes: [PolicyClientNamePipe, FeeClientLastNamePipe,FeePolicyIconPipe]
+  pipes: [PolicyClientNamePipe, FeeClientLastNamePipe, FeePolicyIconPipe]
 })
 export class HomeComponent implements OnInit {
   options: HomeOptions;
   fees: Fee[];
   showOptions: boolean;
   test: number;
+  dateStr: string;
 
   constructor(private policiesService: PoliciesService, private feesService: FeesService) { }
 
   ngOnInit() {
     this.options = new HomeOptions();
     this.options.date = new Date();
+    this.dateStr = this.getDateForInput();
     this.options.limit = '5';
     this.options.page = 1;
+    this.filter();
+  }
+
+  getDateForInput(): string {
+    let year = this.options.date.getFullYear();
+    let month = this.options.date.getMonth() + 1;
+    let day = this.options.date.getDate();
+    return this.options.date.getFullYear() + '-' +
+      (month < 10 ? '0' : '') + month + '-' +
+      (day < 10 ? '0' : '') + day;
+  }
+
+  onDateChange($event: string) {
+    if ($event === this.dateStr) {
+      return;
+    }
+    if ($event === '') {
+      this.options.date = null;
+      this.dateStr = '';
+    } else {
+      var parts = $event.split('-').map(function (e) {
+        return parseInt(e);
+      });
+      this.options.date = new Date(parts[0], parts[1] - 1, parts[2]);
+      this.dateStr = this.getDateForInput();
+    }
+
     this.filter();
   }
 
@@ -74,11 +103,13 @@ export class HomeComponent implements OnInit {
 
   previousDate() {
     this.options.date = this.addDays(this.options.date, -1);
+    this.dateStr = this.getDateForInput();
     this.filter();
   }
 
   nextDate() {
     this.options.date = this.addDays(this.options.date, 1);
+    this.dateStr = this.getDateForInput();
     this.filter();
   }
 
