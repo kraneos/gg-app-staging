@@ -17,7 +17,7 @@ export class FeePolicyIconPipe implements PipeTransform {
     } else if (this.validateAgainstArray(this.INTEGRAL_RISK_TYPES, riskType)) {
       return 'home';
     } else if (this.validateAgainstArray(this.EMPLOYEE_RISK_TYPES, riskType)) {
-      return 'person_outline';
+      return 'favorite';
     } else {
       return 'help_outline';
     }
