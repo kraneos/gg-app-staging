@@ -13,6 +13,7 @@ import {MdIcon, MdIconRegistry} from '@angular2-material/icon';
 import {MdUniqueSelectionDispatcher} from '@angular2-material/core';
 
 import { LoginService } from '../shared/services/login.service';
+import { CurrentUserService } from '../shared/services/current-user.service';
 
 @Component({
   moduleId: module.id,
@@ -31,6 +32,10 @@ import { LoginService } from '../shared/services/login.service';
     MdRadioButton,
     MdIcon
   ],
+  providers: [
+    LoginService,
+    CurrentUserService
+  ],
 })
 export class LoginComponent implements OnInit {
   username: string;
@@ -38,7 +43,10 @@ export class LoginComponent implements OnInit {
   error: string;
   showError: boolean;
 
-  constructor(private router: Router, private loginService: LoginService) { }
+  constructor(
+    private router: Router,
+    private loginService: LoginService,
+    private currentUserService: CurrentUserService) { }
 
   ngOnInit() {
     this.showError = false;
@@ -47,11 +55,31 @@ export class LoginComponent implements OnInit {
   login() {
     this.loginService.login(this.username, this.password)
       .subscribe(
-      res => {
-        localStorage.setItem('segguUser', JSON.stringify(res));
-        this.router.navigate(['/']);
+      user => {
+        this.currentUserService.set(user);
+        this.loginService
+          .getSegguClient(user.segguClient.objectId)
+          .subscribe(
+          segguClient => {
+            this.loginService
+              .getRolesBySegguClient(segguClient)
+              .subscribe(
+              roles => {
+                let postACL = {};
+                postACL[user.objectId] = { read: true, write: true };
+                roles.forEach(function (r) {
+                  postACL['role:' + r.name] = { read: true, write: true };
+                });
+                this.currentUserService.setPostACL(postACL);
+                this.router.navigate(['/']);
+              },
+              onError
+              );
+          },
+          onError
+          );
       },
-      error => onError
+      onError
       );
 
     function onError(error) {

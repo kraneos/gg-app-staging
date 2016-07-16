@@ -104,7 +104,7 @@ export class HomeComponent implements OnInit {
         this.hideProgress = true;
       },
       error => {
-        this.onError
+        this.onError(error);
         this.hideProgress = true;
       });
     this.showOptions = false;

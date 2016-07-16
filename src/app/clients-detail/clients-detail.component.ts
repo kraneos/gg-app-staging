@@ -56,7 +56,7 @@ export class ClientsDetailComponent implements OnInit, OnDestroy {
           this.client = client;
           this.hideProgress = true;
         }, error => {
-          this.onError
+          this.onError(error);
           this.hideProgress = true;
         });
     });

@@ -8,6 +8,7 @@ import { LoginService } from './shared/services/login.service';
 import { ParseService } from './shared/services/parse.service';
 import { ClientsDetailComponent } from './clients-detail/clients-detail.component';
 import { PoliciesDetailComponent } from './policies-detail/policies-detail.component';
+import { PoliciesCollectComponent } from './policies-collect/policies-collect.component';
 
 export const routes: RouterConfig = [
     { path: '', component: HomeComponent, canActivate: [AuthGuard] },
@@ -15,7 +16,8 @@ export const routes: RouterConfig = [
     { path: 'clients/:id', component: ClientsDetailComponent, canActivate: [AuthGuard] },
     { path: 'policies/:id', component: PoliciesDetailComponent, canActivate: [AuthGuard] },
     { path: 'login', component: LoginComponent },
-    { path: 'policies', component: PoliciesComponent, canActivate: [AuthGuard] }
+    { path: 'policies', component: PoliciesComponent, canActivate: [AuthGuard] },
+    { path: 'policies/:id/fees/:feeId/collect', component: PoliciesCollectComponent, canActivate: [AuthGuard] }
 ];
 
 export const APP_ROUTER_PROVIDERS = [

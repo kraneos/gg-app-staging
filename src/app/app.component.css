@@ -49,3 +49,11 @@ md-card {
 [hidden] {
   display: none !important;
 }
+
+.non-decorated-link {
+  text-decoration: none;
+}
+
+.white {
+  color: white;
+}

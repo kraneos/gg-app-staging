@@ -37,18 +37,18 @@ import { LoginService } from './shared/services/login.service';
 })
 export class AppComponent {
   views: Object[] = [
-    {
-      url: "policies",
-      name: "Polizas",
-      description: "Visualiza las polizas",
-      icon: "assignment"
-    },
-    {
-      url: "clients",
-      name: "Clientes",
-      description: "Visualiza tus clientes",
-      icon: "account_box"
-    }
+    // {
+    //   url: "policies",
+    //   name: "Polizas",
+    //   description: "Visualiza las polizas",
+    //   icon: "assignment"
+    // },
+    // {
+    //   url: "clients",
+    //   name: "Clientes",
+    //   description: "Visualiza tus clientes",
+    //   icon: "account_box"
+    // }
   ];
 
   constructor(private router: Router, private loginService: LoginService) { }

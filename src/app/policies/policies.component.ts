@@ -30,7 +30,7 @@ export class PoliciesComponent implements OnInit {
      this.policiesService.query(this.policiesOptions)
      .subscribe(
        policies => this.policies = policies,
-       error => this.onError);
+       this.onError);
 
   }
 

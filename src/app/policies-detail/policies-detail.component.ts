@@ -102,7 +102,7 @@ export class PoliciesDetailComponent implements OnInit, OnDestroy {
               this.hideProgress = this.fees !== null && (this.vehicles !== null || this.employees !== null || this.integrals !== null);
             },
             error => {
-              this.onError
+              this.onError(error);
               this.hideProgress = true;
             });
 
@@ -114,7 +114,7 @@ export class PoliciesDetailComponent implements OnInit, OnDestroy {
                 this.hideProgress = this.fees !== null && (this.vehicles !== null || this.employees !== null || this.integrals !== null);
               },
               error => {
-                this.onError
+                this.onError(error);
                 this.hideProgress = true;
               });
           } else if (this.validateAgainstArray(this.INTEGRAL_RISK_TYPES, this.policy.risk.riskType)) {
@@ -125,7 +125,7 @@ export class PoliciesDetailComponent implements OnInit, OnDestroy {
                 this.hideProgress = this.fees !== null && (this.vehicles !== null || this.employees !== null || this.integrals !== null);
               },
               error => {
-                this.onError
+                this.onError(error);
                 this.hideProgress = true;
               });
           } else if (this.validateAgainstArray(this.EMPLOYEE_RISK_TYPES, this.policy.risk.riskType)) {
@@ -136,13 +136,13 @@ export class PoliciesDetailComponent implements OnInit, OnDestroy {
                 this.hideProgress = this.fees !== null && (this.vehicles !== null || this.employees !== null || this.integrals !== null);
               },
               error => {
-                this.onError
+                this.onError(error);
                 this.hideProgress = true;
               });
           }
         },
         error => {
-          this.onError
+          this.onError(error);
           this.hideProgress = true;
         });
     });

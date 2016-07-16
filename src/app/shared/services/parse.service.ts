@@ -2,19 +2,20 @@ import { Injectable } from '@angular/core';
 import { Http, Request, RequestOptionsArgs, Response, ConnectionBackend, RequestOptions, Headers } from '@angular/http';
 import { Observable } from 'rxjs/Observable';
 import { CurrentUser } from '../domain/current-user';
+import { CurrentUserService } from '../services/current-user.service';
 
 @Injectable()
 export abstract class ParseService {
     /**
      *
      */
-    constructor(private http: Http) {
+    constructor(private http: Http, private currentUserService: CurrentUserService) {
     }
     get(url: string, options?: RequestOptionsArgs): Observable<Response> {
         return this.http.get(this.getUrl(url), this.getOptions(options));
     }
     post(url: string, body: any, options?: RequestOptionsArgs): Observable<Response> {
-        return this.http.post(this.getUrl(url), body, this.getOptions(options));
+        return this.http.post(this.getUrl(url), this.applyACL(body), this.getOptions(options));
     }
     put(url: string, body: any, options?: RequestOptionsArgs): Observable<Response> {
         return this.http.put(this.getUrl(url), body, this.getOptions(options));
@@ -48,5 +49,14 @@ export abstract class ParseService {
             opts.headers.append('X-Parse-Session-Token', user.sessionToken);
         }
         return opts;
+    }
+    private applyACL(body: any) {
+      var postACL = this.currentUserService.getPostACL();
+
+      if (postACL && body) {
+        body.ACL = postACL;
+      }
+
+      return body;
     }
 }
