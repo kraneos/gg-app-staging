@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { Router } from '@angular/router';
+import { ROUTER_DIRECTIVES, Router } from '@angular/router';
 import { Observable } from 'rxjs/Observable';
 import {MdToolbar} from '@angular2-material/toolbar';
 import {MdButton} from '@angular2-material/button';
@@ -30,7 +30,8 @@ import { CurrentUserService } from '../shared/services/current-user.service';
     MdCheckbox,
     MdRadioGroup,
     MdRadioButton,
-    MdIcon
+    MdIcon,
+    ROUTER_DIRECTIVES
   ],
   providers: [
     LoginService,
@@ -56,28 +57,48 @@ export class LoginComponent implements OnInit {
     this.loginService.login(this.username, this.password)
       .subscribe(
       user => {
-        this.currentUserService.set(user);
         this.loginService
-          .getSegguClient(user.segguClient.objectId)
+          .getRolesByUser(user.objectId)
           .subscribe(
-          segguClient => {
+          roles => {
+            let notClient = false;
+            user.roles = roles;
+            this.currentUserService.set(user);
+            roles.forEach(r => {
+              if (r.name.indexOf('Clients') === -1 && !notClient) {
+                notClient = true;
+              }
+            });
             this.loginService
-              .getRolesBySegguClient(segguClient)
+              .getSegguClient(user.segguClient.objectId)
               .subscribe(
-              roles => {
-                let postACL = {};
-                postACL[user.objectId] = { read: true, write: true };
-                roles.forEach(function (r) {
-                  postACL['role:' + r.name] = { read: true, write: true };
-                });
-                this.currentUserService.setPostACL(postACL);
-                this.router.navigate(['/']);
+              segguClient => {
+                this.loginService
+                  .getRolesBySegguClient(segguClient)
+                  .subscribe(
+                  roles => {
+                    let postACL = {};
+
+                    // Guarda los roles y el usuario como el ACL para los registros que se guarden por la app.
+                    postACL[user.objectId] = { read: true, write: true };
+
+                    roles.forEach(function (r) {
+                      postACL['role:' + r.name] = { read: true, write: true };
+                    });
+                    this.currentUserService.setPostACL(postACL);
+
+                    if (notClient) {
+                      this.router.navigate(['/']);
+                    } else {
+                      this.router.navigate(['/policies']);
+                    }
+                  },
+                  onError
+                  );
               },
               onError
               );
-          },
-          onError
-          );
+          })
       },
       onError
       );

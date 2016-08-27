@@ -1,4 +1,5 @@
 import { SegguClient } from '../domain/seggu-client';
+import { Role } from '../domain/role';
 
 export class CurrentUser {
   objectId: string;
@@ -6,4 +7,5 @@ export class CurrentUser {
   sessionToken: string;
   username: string;
   segguClient: SegguClient;
+  roles: Role[];
 }

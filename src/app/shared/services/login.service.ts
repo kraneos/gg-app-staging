@@ -53,6 +53,15 @@ export class LoginService {
       .catch(this.parseService.handleError);
   }
 
+  getRolesByUser(objId: string): Observable<Role[]> {
+    let url = 'roles';
+    url = url + '?where={"users": {"$in": [{"__type": "Pointer","className": "users","objectId": "' + objId + '"}]}}';
+    return this.parseService
+      .get(url)
+      .map(this.parseService.extractArray)
+      .catch(this.parseService.handleError);
+  }
+
   private extractLoginData(res: Response) {
     let body = res.json();
     return body || {};

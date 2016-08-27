@@ -1,9 +1,11 @@
 import { Injectable } from '@angular/core';
 import { CurrentUser } from '../domain/current-user';
+import { User } from '../domain/user';
 
 @Injectable()
 export class CurrentUserService {
   private SEGGU_USER = 'segguUser';
+  private SEGGU_FULL_USER = 'segguFullUser';
   private SEGGU_POST_ACL = 'segguPostACL';
 
   get(): CurrentUser {
@@ -14,6 +16,16 @@ export class CurrentUserService {
   set(user: CurrentUser) {
     let userStr = JSON.stringify(user);
     localStorage.setItem(this.SEGGU_USER, userStr);
+  }
+
+  getFull(): User {
+    let user = localStorage.getItem(this.SEGGU_FULL_USER);
+    return JSON.parse(user);
+  }
+
+  setFull(user: User) {
+    let userStr = JSON.stringify(user);
+    localStorage.setItem(this.SEGGU_FULL_USER, userStr);
   }
 
   remove() {
