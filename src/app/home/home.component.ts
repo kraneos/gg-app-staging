@@ -92,7 +92,7 @@ export class HomeComponent implements OnInit {
   }
 
   onError(error) {
-    return Observable.throw(error.message);
+    return Observable.throw(error.message || error);
   }
 
   filter() {

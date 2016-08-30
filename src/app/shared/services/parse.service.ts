@@ -1,8 +1,12 @@
 import { Injectable } from '@angular/core';
 import { Http, Request, RequestOptionsArgs, Response, ConnectionBackend, RequestOptions, Headers } from '@angular/http';
-import { Observable } from 'rxjs/Observable';
+import {Observable} from 'rxjs/Observable';
+import 'rxjs/add/observable/fromEvent';
+import 'rxjs/add/operator/catch';
+import 'rxjs/Rx';
 import { CurrentUser } from '../domain/current-user';
 import { CurrentUserService } from '../services/current-user.service';
+import { environment } from '../../environment';
 
 @Injectable()
 export abstract class ParseService {
@@ -38,7 +42,7 @@ export abstract class ParseService {
         return Observable.throw(errMsg);
     }
     private getUrl(url: string): string {
-        return 'https://seggu-api-develop.herokuapp.com/parse/' + url;
+        return environment.parseUrl + url;
     }
     private getOptions(options?: RequestOptionsArgs) {
         var opts = options || new RequestOptions({ headers: new Headers() });

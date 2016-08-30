@@ -67,6 +67,6 @@ export class ClientsDetailComponent implements OnInit, OnDestroy {
   }
 
   private onError(error) {
-    return Observable.throw(error.message);
+    return Observable.throw(error.message || error);
   }
 }

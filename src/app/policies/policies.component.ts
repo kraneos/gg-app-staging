@@ -35,7 +35,7 @@ export class PoliciesComponent implements OnInit {
   }
 
     private onError(error) {
-    return Observable.throw(error.message);
+    return Observable.throw(error.message || error);
   }
 
 }

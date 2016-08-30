@@ -3,5 +3,7 @@
 // The build system defaults to the dev environment
 
 export const environment = {
-  production: false
+  production: false,
+  parseUrl: 'http://localhost:1337/parse/',
+  registrationUrl: 'http://localhost:1337/register-client'
 };

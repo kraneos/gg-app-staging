@@ -104,9 +104,9 @@ export class LoginComponent implements OnInit {
       );
 
     function onError(error) {
-      this.error = error.message;
+      this.error = error.message || error;
       this.showError = true;
-      return Observable.throw(error.message);
+      return Observable.throw(error.message || error);
     }
   }
 }

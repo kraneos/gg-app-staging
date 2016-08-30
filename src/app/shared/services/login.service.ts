@@ -6,6 +6,7 @@ import { ParseService } from './parse.service';
 import { CurrentUser } from '../domain/current-user';
 import { Role } from '../domain/role';
 import { User } from '../domain/user';
+import { RegistrationUser } from '../domain/registration-user';
 import { SegguClient } from '../domain/seggu-client';
 
 @Injectable()
