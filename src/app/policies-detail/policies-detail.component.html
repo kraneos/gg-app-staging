@@ -29,10 +29,10 @@
       </p>
     </form>
     <md-list>
-      <md-list-item *ngFor="let fee of fees">
+      <md-list-item *ngFor="let fee of fees;let i = index">
         <h3 md-line>{{fee.number}} - {{fee.value | currency:'ARS':true:'1.2'}} - {{fee | feeStatusName}}</h3>
         <!--<a *ngIf="fee.state === 0" [routerLink]="['fees', fee.objectId, 'collect']">-->
-        <a *ngIf="fee.state === 0" (click)="collect(fee)">
+        <a *ngIf="fee.state === 0" (click)="collect(fee, i)">
           <button md-icon-button>
             <md-icon>attach_money</md-icon>
           </button>

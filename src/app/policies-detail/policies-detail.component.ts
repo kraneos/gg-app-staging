@@ -153,13 +153,39 @@ export class PoliciesDetailComponent implements OnInit, OnDestroy {
     this.sub.unsubscribe();
   }
 
-  collect(fee: Fee) {
+  collect(fee: Fee, index: number) {
     if (this.validateCurrentFeeState(fee)) {
-
+      if (index > 0) {
+        var prevFee = this.fees[index - 1];
+        if (this.validatePreviousFeeState(prevFee)) {
+          this.router.navigate(['fees', fee.objectId, 'collect']);
+        } else {
+          alert('Verifique el estado de la cuota anterior.');
+        }
+      } else {
+        this.router.navigate(['fees', fee.objectId, 'collect']);
+      }
+    } else {
+      alert('Verifique el estado de la cuota seleccionada.');
     }
   }
 
   private validateCurrentFeeState(fee: Fee) {
+    switch (fee.state) {
+      case FEE_STATES.DEBE: return true;
+      case FEE_STATES.LIQUIDADO: return false;
+      case FEE_STATES.OBSERVADO: return true;
+      case FEE_STATES.PAGADO: return false;
+      case FEE_STATES.PRELIQUIDADO: return false;
+      case FEE_STATES.MANTENER_CUBIERTO: return true;
+      case FEE_STATES.MOROSO: return true;
+      case FEE_STATES.SIN_COBERTURA: return true;
+      case FEE_STATES.DEBE_Y_PRELIQUIDADO: return true;
+      default: return false;
+    }
+  }
+
+  private validatePreviousFeeState(fee: Fee) {
     switch (fee.state) {
       case FEE_STATES.DEBE: return true;
       case FEE_STATES.LIQUIDADO: return false;
