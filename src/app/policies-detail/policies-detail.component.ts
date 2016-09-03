@@ -20,6 +20,7 @@ import { Vehicle } from '../shared/domain/vehicle';
 import { Integral } from '../shared/domain/integral';
 import { Employee } from '../shared/domain/employee';
 import { Fee } from '../shared/domain/fee';
+import { FEE_STATES } from '../shared/domain/enums/fee-states';
 
 import { PoliciesService } from '../shared/services/policies.service';
 import { VehiclesService } from '../shared/services/vehicles.service';
@@ -150,6 +151,27 @@ export class PoliciesDetailComponent implements OnInit, OnDestroy {
 
   ngOnDestroy() {
     this.sub.unsubscribe();
+  }
+
+  collect(fee: Fee) {
+    if (this.validateCurrentFeeState(fee)) {
+
+    }
+  }
+
+  private validateCurrentFeeState(fee: Fee) {
+    switch (fee.state) {
+      case FEE_STATES.DEBE: return true;
+      case FEE_STATES.LIQUIDADO: return false;
+      case FEE_STATES.OBSERVADO: return true;
+      case FEE_STATES.PAGADO: return false;
+      case FEE_STATES.PRELIQUIDADO: return false;
+      case FEE_STATES.MANTENER_CUBIERTO: return true;
+      case FEE_STATES.MOROSO: return true;
+      case FEE_STATES.SIN_COBERTURA: return true;
+      case FEE_STATES.DEBE_Y_PRELIQUIDADO: return true;
+      default: return false;
+    }
   }
 
   private onError(error) {
