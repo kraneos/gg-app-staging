@@ -2,8 +2,10 @@ import { provideRouter, RouterConfig } from '@angular/router';
 import { HomeComponent } from './home/home.component';
 import { ClientsComponent } from './clients/clients.component';
 import { PoliciesComponent } from './policies/policies.component';
+import { ClientPoliciesComponent } from './client-policies/client-policies.component';
 import { LoginComponent } from './login/login.component';
 import { RegisterComponent } from './register/register.component';
+import { PasRegisterComponent } from './pas-register/pas-register.component';
 import { AuthGuard } from './auth.guard';
 import { ProducersGuard } from './producers.guard';
 import { LoginService } from './shared/services/login.service';
@@ -19,7 +21,9 @@ export const routes: RouterConfig = [
     { path: 'policies/:id', component: PoliciesDetailComponent, canActivate: [AuthGuard] },
     { path: 'login', component: LoginComponent },
     { path: 'seggu-clients/:segguClientId/register', component: RegisterComponent },
+    { path: 'pas-register', component: PasRegisterComponent },
     { path: 'policies', component: PoliciesComponent, canActivate: [AuthGuard] },
+    { path: 'client-policies', component: ClientPoliciesComponent, canActivate: [AuthGuard] },
     { path: 'policies/:id/fees/:feeId/collect', component: PoliciesCollectComponent, canActivate: [AuthGuard, ProducersGuard] }
 ];
 

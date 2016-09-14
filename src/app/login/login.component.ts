@@ -90,7 +90,7 @@ export class LoginComponent implements OnInit {
                     if (notClient) {
                       this.router.navigate(['/']);
                     } else {
-                      this.router.navigate(['/policies']);
+                      this.router.navigate(['/client-policies']);
                     }
                   },
                   onError

@@ -27,6 +27,7 @@ import { VehiclesService } from '../shared/services/vehicles.service';
 import { IntegralsService } from '../shared/services/integrals.service';
 import { EmployeesService } from '../shared/services/employees.service';
 import { FeesService } from '../shared/services/fees.service';
+import { CurrentUserService } from '../shared/services/current-user.service';
 
 import { FeeStatusNamePipe } from './fee-status-name.pipe';
 
@@ -67,6 +68,7 @@ export class PoliciesDetailComponent implements OnInit, OnDestroy {
   integrals: Integral[];
   employees: Employee[];
   hideProgress: boolean;
+  isProducer: boolean;
   private sub: any;
   private VEHICLE_RISK_TYPES = [1];
   private INTEGRAL_RISK_TYPES = [2];
@@ -79,7 +81,8 @@ export class PoliciesDetailComponent implements OnInit, OnDestroy {
     private vehiclesService: VehiclesService,
     private integralsService: IntegralsService,
     private employeesService: EmployeesService,
-    private feesService: FeesService) { }
+    private feesService: FeesService,
+    private currentUserService: CurrentUserService) { }
 
   ngOnInit() {
     this.policy = new Policy();
@@ -89,6 +92,7 @@ export class PoliciesDetailComponent implements OnInit, OnDestroy {
     this.employees = [];
     this.integrals = [];
     this.fees = [];
+    this.isProducer = this.currentUserService.isProducer();
 
     this.sub = this.route.params.subscribe(params => {
       let id = params['id'];

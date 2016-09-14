@@ -58,6 +58,7 @@ const barrels: string[] = [
   'app/policies-collect',
   'app/my-new-component',
   'app/register',
+  'app/pas-register',
   /** @cli-barrel */
 ];
 

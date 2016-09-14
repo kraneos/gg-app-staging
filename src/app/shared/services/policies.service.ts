@@ -18,7 +18,7 @@ export class PoliciesService {
     let url = 'classes/Policy?skip=' + (+opts.limit * (opts.page - 1)) + '&limit=' + opts.limit;
     url = url + '&include=client,risk';
     if (opts.client) {
-      url = url + '$where={"client":"' + opts.client.toString() + '"}';
+      url = url + '&where={"client":' + opts.client.toString() + '}';
     }
 
     return this.parseService

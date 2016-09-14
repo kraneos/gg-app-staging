@@ -46,7 +46,7 @@ export abstract class ParseService {
     }
     private getOptions(options?: RequestOptionsArgs) {
         var opts = options || new RequestOptions({ headers: new Headers() });
-        opts.headers.append('X-Parse-Application-Id', 'seggu-api');
+        opts.headers.append('X-Parse-Application-Id', environment.parseAppId);
         let userStr = localStorage.getItem('segguUser');
         let user = JSON.parse(userStr);
         if (user) {

@@ -13,14 +13,6 @@ export class ProducersGuard implements CanActivate {
     next: ActivatedRouteSnapshot,
     state: RouterStateSnapshot
   ) {
-    let currentUser = this.currentUserService.get();
-    let isProducer = false;
-    currentUser.roles.forEach(role => {
-      if (role.name.indexOf('Clients') === -1) {
-        isProducer = true;
-      }
-    });
-
-    return isProducer;
+    return this.currentUserService.isProducer();
   }
 }

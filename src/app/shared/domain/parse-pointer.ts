@@ -1,5 +1,5 @@
 export class ParsePointer {
-  private TYPE: 'Pointer';
+  private TYPE: string = 'Pointer';
 
   constructor(
     private className: string,

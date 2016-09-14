@@ -1,0 +1,17 @@
+<md-toolbar color="primary">
+  <span>Pólizas</span>
+  <span class="fill-remaining"></span>
+  <!--<button md-fab color="accent" (click)="showOptions = !showOptions" *ngIf="!showOptions">
+    <md-icon class="md-24">filter_list</md-icon>
+  </button>-->
+</md-toolbar>
+<md-nav-list>
+  <md-list-item *ngFor="let pol of policies">
+    <span md-line>{{pol.number}}</span>
+    <a [routerLink]="['/policies', pol.objectId]">
+      <button md-icon-button>
+        <md-icon>{{pol | policyIcon}}</md-icon>
+      </button>
+    </a>
+  </md-list-item>
+</md-nav-list>

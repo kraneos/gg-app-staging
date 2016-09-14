@@ -7,5 +7,5 @@ export class ParseQueryOptions {
 
 export class ParseConstraint {
     field: string;
-    
+
 }

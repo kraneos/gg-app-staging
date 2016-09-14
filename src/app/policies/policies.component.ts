@@ -26,7 +26,6 @@ export class PoliciesComponent implements OnInit {
   ngOnInit() {
     this.policies = [];
     this.policiesOptions = new PoliciesOptions();
-    this.policiesOptions.client = new ParsePointer('Client', this.currentUserService.get().objectId);
     this.policiesOptions.number = '';
     this.policiesOptions.limit = 10;
     this.policiesOptions.page = 1;

@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { RegistrationsService } from '../shared/services/registrations.service';
 import { ROUTER_DIRECTIVES, Router, ActivatedRoute } from '@angular/router';
 import { Observable } from 'rxjs/Observable';
 import {MdToolbar} from '@angular2-material/toolbar';
@@ -11,18 +12,12 @@ import {MdCheckbox} from '@angular2-material/checkbox';
 import {MdRadioButton, MdRadioGroup} from '@angular2-material/radio';
 import {MdIcon, MdIconRegistry} from '@angular2-material/icon';
 import {MdUniqueSelectionDispatcher} from '@angular2-material/core';
-import { LoginService } from '../shared/services/login.service';
-import { RegistrationsService } from '../shared/services/registrations.service';
-import { SegguClientsService } from '../shared/services/seggu-clients.service';
-import { CurrentUserService } from '../shared/services/current-user.service';
-import { RolesService } from '../shared/services/roles.service';
-import { SegguClient } from '../shared/domain/seggu-client';
 
 @Component({
   moduleId: module.id,
-  selector: 'app-register',
-  templateUrl: 'register.component.html',
-  styleUrls: ['register.component.css'],
+  selector: 'app-pas-register',
+  templateUrl: 'pas-register.component.html',
+  styleUrls: ['pas-register.component.css'],
   directives: [
     MD_SIDENAV_DIRECTIVES,
     MD_LIST_DIRECTIVES,
@@ -37,41 +32,25 @@ import { SegguClient } from '../shared/domain/seggu-client';
     ROUTER_DIRECTIVES
   ],
   providers: [
-    LoginService,
-    CurrentUserService,
-    SegguClientsService,
-    RolesService,
     RegistrationsService
   ]
 })
-export class RegisterComponent implements OnInit {
+export class PasRegisterComponent implements OnInit {
   password: string;
   repeatPassword: string;
   username: string;
   email: string;
+  phone: string;
+  company: string;
   error: string;
-  producerName: string;
   showError: boolean;
-  segguClients: SegguClient[];
-  segguClient: SegguClient;
 
   constructor(
     private registrationsService: RegistrationsService,
-    private segguClientsService: SegguClientsService,
-    private router: Router,
-    private activatedRoute: ActivatedRoute,
-    private currentUserService: CurrentUserService,
-    private rolesService: RolesService
+    private router: Router
   ) { }
 
   ngOnInit() {
-    this.activatedRoute.params.subscribe(
-      params => {
-        this.segguClient = new SegguClient();
-        this.segguClient.objectId = params['segguClientId'];
-      },
-      this.onError
-    );
   }
 
   register() {
@@ -79,28 +58,25 @@ export class RegisterComponent implements OnInit {
       alert('Las passwords no coinciden!');
       return;
     }
-    let currentUserService = this.currentUserService;
-    let segguClientsService = this.segguClientsService;
-    let rolesService = this.rolesService;
-    let registrationsService = this.registrationsService;
-    let onError = this.onError;
-    let router = this.router;
-    let segguClientId = this.segguClient.objectId;
 
-    registrationsService.register({
+    let router = this.router;
+    let onError = this.onError;
+
+    this.registrationsService.registerPas({
       username: this.username,
       email: this.email,
       password: this.password,
-      segguClient: this.segguClient
+      phone: this.phone,
+      company: this.company,
+      segguClient: null
     }).subscribe(
       res => {
-        alert('Su usuario se creo correctamente!')
-        router.navigate(['/login']);
+        alert('Su usuario se creo correctamente!\nPodes loguearte con este usuario en SeGGu Escritorio.')
+        window.close();
       },
       onError
       );
   }
-
   onError(error) {
     this.error = error.message || error;
     this.showError = true;
