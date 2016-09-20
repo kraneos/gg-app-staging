@@ -1,0 +1,7 @@
+<h1>LOGIN</h1>
+<form name="loginForm">
+  <input placeholder="username" [(ngModel)]="username" name="username" />
+  <input placeholder="password" [(ngModel)]="password" type="password" name="password" />
+  <button (click)="login()">Login</button>
+  <span color="warn" *ngIf="showError">error</span>
+</form>

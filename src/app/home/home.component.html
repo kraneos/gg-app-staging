@@ -1,0 +1,32 @@
+<span>Debe</span>
+<hr/>
+<section>
+  <form>
+    <table>
+      <tr>
+        <td>
+          <button (click)="previousDate()">&lt;</button>
+        </td>
+        <td>
+          <input placeholder="Fecha" [ngModel]="dateStr" (ngModelChange)="onDateChange($event)" type="date" name="fecha" />
+        </td>
+        <td>
+          <button (click)="nextDate()">&gt;</button>
+        </td>
+      </tr>
+    </table>
+  </form>
+</section>
+<ul>
+  <i *ngFor="let fee of fees">
+    <span>{{fee | feeClientLastName}}</span>
+    <span>{{fee.policy.number}}</span>
+    <span>{{fee.value | currency}}</span>
+    <a [routerLink]="['policies', fee.policy.objectId]">
+      <button>{{fee | feePolicyIcon}}</button>
+    </a>
+    <a [routerLink]="['clients', fee.policy.client.objectId]">
+      <button>person</button>
+    </a>
+  </i>
+</ul>

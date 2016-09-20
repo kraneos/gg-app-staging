@@ -4,5 +4,9 @@
 // The list of which env maps to which file can be found in `angular-cli.json`.
 
 export const environment = {
-  production: false
+  production: false,
+  parseUrl: 'http://localhost:1337/parse/',
+  parseAppId: 'myAppId',
+  registrationUrl: 'http://localhost:1337/register-client',
+  pasRegistrationUrl: 'http://localhost:1337/register'
 };
