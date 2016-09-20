@@ -13,8 +13,16 @@ import { LoginService } from './shared/services/login.service';
 import { CurrentUserService } from './shared/services/current-user.service';
 import { PoliciesService } from './shared/services/policies.service';
 import { FeesService } from './shared/services/fees.service';
+import { RegistrationsService } from './shared/services/registrations.service';
+import { VehiclesService } from './shared/services/vehicles.service';
+import { EmployeesService } from './shared/services/employees.service';
+import { IntegralsService } from './shared/services/integrals.service';
 import { FeeClientLastNamePipe } from './shared/pipes/fee-client-last-name.pipe';
 import { FeePolicyIconPipe } from './shared/pipes/fee-policy-icon.pipe';
+import { PasRegisterComponent } from './pas-register/pas-register.component';
+import { PoliciesDetailComponent } from './policies-detail/policies-detail.component';
+import { FeeStatusNamePipe } from './shared/pipes/fee-status-name.pipe';
+import { PoliciesCollectComponent } from './policies-collect/policies-collect.component';
 
 @NgModule({
   declarations: [
@@ -22,7 +30,11 @@ import { FeePolicyIconPipe } from './shared/pipes/fee-policy-icon.pipe';
     HomeComponent,
     LoginComponent,
     FeeClientLastNamePipe,
-    FeePolicyIconPipe
+    FeePolicyIconPipe,
+    PasRegisterComponent,
+    PoliciesDetailComponent,
+    FeeStatusNamePipe,
+    PoliciesCollectComponent
   ],
   imports: [
     BrowserModule,
@@ -36,7 +48,11 @@ import { FeePolicyIconPipe } from './shared/pipes/fee-policy-icon.pipe';
     LoginService,
     CurrentUserService,
     PoliciesService,
-    FeesService
+    FeesService,
+    RegistrationsService,
+    VehiclesService,
+    EmployeesService,
+    IntegralsService
   ],
   bootstrap: [
     AppComponent

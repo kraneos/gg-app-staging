@@ -1,0 +1,27 @@
+<span>Registracion</span>
+<form name="loginForm" #loginForm="ngForm">
+  <p>
+    <input placeholder="Email" [(ngModel)]="email" name="email" type="email" required />
+  </p>
+  <p>
+    <input placeholder="Nombre de Usuario" [(ngModel)]="username" name="username" required />
+  </p>
+  <p>
+    <input placeholder="Password" [(ngModel)]="password" type="password" name="password" required />
+  </p>
+  <p>
+    <input placeholder="Repita la Password" [(ngModel)]="repeatPassword" type="password" name="password" required />
+  </p>
+  <p>
+    <input placeholder="Telefono" [(ngModel)]="phone" type="phone" name="phone" required />
+  </p>
+  <p>
+    <input placeholder="Compania" [(ngModel)]="company" type="text" name="company" required />
+  </p>
+  <p>
+    <button (click)="register()" [disabled]="!loginForm.form.valid">Crear Usuario</button>
+  </p>
+  <p>
+    <span color="warn" *ngIf="showError">Revise sus datos.</span>
+  </p>
+</form>

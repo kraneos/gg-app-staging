@@ -1,0 +1,12 @@
+export enum FeeStates {
+  DEBE = 0,
+  PAGADO = 1,
+  OBSERVADO = 2,
+  PRELIQUIDADO = 3,
+  LIQUIDADO = 4,
+  MANTENER_CUBIERTO = 5,
+  MOROSO = 6,
+  SIN_COBERTURA = 7,
+  DEBE_Y_PRELIQUIDADO = 8,
+  OTRO = 9
+}
