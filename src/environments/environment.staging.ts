@@ -5,8 +5,8 @@
 
 export const environment = {
   production: false,
-  parseUrl: 'http://api.seggu.com.ar/parse/',
+  parseUrl: 'http://api.staging.seggu.com.ar/parse/',
   parseAppId: 'seggu-api',
-  registrationUrl: 'http://api.seggu.com.ar/register-client',
-  pasRegistrationUrl: 'http://api.seggu.com.ar/register'
+  registrationUrl: 'http://api.staging.seggu.com.ar/register-client',
+  pasRegistrationUrl: 'http://api.staging.seggu.com.ar/register'
 };
