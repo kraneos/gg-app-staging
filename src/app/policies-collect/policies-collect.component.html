@@ -1,3 +1,15 @@
-<p>
-  policies-collect works!
-</p>
+<span>Cobranza</span>
+<form #collectForm="ngForm">
+  <p>
+    <input required placeholder="Nro Recibo" [(ngModel)]="receiptNumber" style="width: 100%" name="receiptNumber" />
+  </p>
+  <p>
+    <input required disabled placeholder="Monto" [(ngModel)]="amount" name="amount" type="number" />
+  </p>
+  <p>
+    <select name="producers" *ngIf="showProducers" [(ngModel)]="producerId" required>
+      <option *ngFor="let prod of producers" [value]="prod.objectId">{{prod.name}}</option>
+    </select>
+  </p>
+  <button (click)="submit()" [disabled]="!collectForm.form.valid">save</button>
+</form>

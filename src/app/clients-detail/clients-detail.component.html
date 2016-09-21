@@ -1,0 +1,16 @@
+<span>Cliente</span>
+<form>
+  <p>
+    <input disabled placeholder="Nombre" [(ngModel)]="client.firstName" name="firstName" style="width: 100%" />
+  </p>
+  <p>
+    <input disabled placeholder="Apellido" [(ngModel)]="client.lastName" name="lastName" style="width: 100%" />
+  </p>
+  <p>
+    <input disabled placeholder="Tipo Documento" [(ngModel)]="client.documentType" name="documentType" />
+    <input disabled placeholder="Documento" [(ngModel)]="client.document" name="document" />
+  </p>
+  <p>
+    <input #email disabled placeholder="Email" [(ngModel)]="client.email" align="end" name="email" />
+  </p>
+</form>

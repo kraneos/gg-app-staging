@@ -1,0 +1,9 @@
+<span>Pólizas</span>
+<ul>
+  <li *ngFor="let pol of policies">
+    <span>{{pol.number}}</span>
+    <a [routerLink]="['/policies', pol.objectId]">
+      <button><{{pol | policyIcon}}</button>
+    </a>
+  </li>
+</ul>

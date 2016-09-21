@@ -1,4 +1,12 @@
 <span>APP COMPONENT</span>
+<span *ngFor="let view of views">
+<span>|</span>
+<a *ngFor="let view of views" [routerLink]="[view.url]">
+  {{view.icon}}
+  <span>{{view.name}}</span>
+  <span md-line class="secondary">{{view.description}}</span>
+</a>
+</span>
 <hr/>
 <a (click)="logout()">Cerrar Sesion</a>
 <hr/>
