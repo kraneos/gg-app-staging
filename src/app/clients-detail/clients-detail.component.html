@@ -1,16 +1,25 @@
-<span>Cliente</span>
-<form>
-  <p>
-    <input disabled placeholder="Nombre" [(ngModel)]="client.firstName" name="firstName" style="width: 100%" />
-  </p>
-  <p>
-    <input disabled placeholder="Apellido" [(ngModel)]="client.lastName" name="lastName" style="width: 100%" />
-  </p>
-  <p>
-    <input disabled placeholder="Tipo Documento" [(ngModel)]="client.documentType" name="documentType" />
-    <input disabled placeholder="Documento" [(ngModel)]="client.document" name="document" />
-  </p>
-  <p>
-    <input #email disabled placeholder="Email" [(ngModel)]="client.email" align="end" name="email" />
-  </p>
-</form>
+<md-progress-circle mode="indeterminate" *ngIf="!hideProgress"></md-progress-circle>
+<md-card>
+  <md-toolbar color="primary">Cliente</md-toolbar>
+  <md-card-content>
+    <form>
+      <p>
+        <md-input disabled placeholder="Nombre" [(ngModel)]="client.firstName" name="firstName" style="width: 100%"></md-input>
+      </p>
+      <p>
+        <md-input disabled placeholder="Apellido" [(ngModel)]="client.lastName" name="lastName" style="width: 100%"></md-input>
+      </p>
+      <p>
+        <md-input disabled placeholder="Tipo Documento" [(ngModel)]="client.documentType" name="documentType"></md-input>
+        <md-input disabled placeholder="Documento" [(ngModel)]="client.document" name="document"></md-input>
+      </p>
+      <p>
+        <md-input #email disabled placeholder="Email" [(ngModel)]="client.email" align="end" name="email">
+          <span md-prefix>
+            <md-icon [class.primary]="email.focused">email</md-icon>&nbsp;
+          </span>
+        </md-input>
+      </p>
+    </form>
+  </md-card-content>
+</md-card>

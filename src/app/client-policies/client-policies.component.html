@@ -1,9 +1,14 @@
-<span>Pólizas</span>
-<ul>
-  <li *ngFor="let pol of policies">
-    <span>{{pol.number}}</span>
+<md-toolbar color="primary">
+  <span>Pólizas</span>
+  <span class="fill-remaining"></span>
+</md-toolbar>
+<md-nav-list>
+  <md-list-item *ngFor="let pol of policies">
+    <span md-line>{{pol.number}}</span>
     <a [routerLink]="['/policies', pol.objectId]">
-      <button><{{pol | policyIcon}}</button>
+      <button md-icon-button>
+        <md-icon>{{pol | policyIcon}}</md-icon>
+      </button>
     </a>
-  </li>
-</ul>
+  </md-list-item>
+</md-nav-list>

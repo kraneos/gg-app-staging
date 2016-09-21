@@ -1,32 +1,52 @@
-<span>Debe</span>
-<hr/>
+<md-toolbar color="primary">
+  <span>Debe</span>
+  <span class="fill-remaining"></span>
+</md-toolbar>
 <section>
   <form>
     <table>
       <tr>
         <td>
-          <button (click)="previousDate()">&lt;</button>
+          <button md-icon-button (click)="previousDate()">
+            <md-icon class="md-24">skip_previous</md-icon>
+          </button>
         </td>
         <td>
-          <input placeholder="Fecha" [ngModel]="dateStr" (ngModelChange)="onDateChange($event)" type="date" name="fecha" />
+          <md-input placeholder="Fecha" [ngModel]="dateStr" (ngModelChange)="onDateChange($event)" type="date" name="fecha"></md-input>
         </td>
         <td>
-          <button (click)="nextDate()">&gt;</button>
+          <button md-icon-button (click)="nextDate()">
+            <md-icon class="md-24">skip_next</md-icon>
+          </button>
         </td>
       </tr>
     </table>
   </form>
 </section>
-<ul>
-  <i *ngFor="let fee of fees">
-    <span>{{fee | feeClientLastName}}</span>
-    <span>{{fee.policy.number}}</span>
-    <span>{{fee.value | currency}}</span>
+<md-nav-list>
+  <md-list-item *ngIf="showOptions">
+    <md-input placeholder="Pagina" [(ngModel)]="options.page" type="number" min="1"></md-input>
+    <md-radio-group [(ngModel)]="options.limit">
+      <md-radio-button value="5">5</md-radio-button>
+      <md-radio-button value="10">10</md-radio-button>
+      <md-radio-button value="15">15</md-radio-button>
+    </md-radio-group>
+    <button md-raised-button (click)="filter()">Buscar</button>
+  </md-list-item>
+  <md-progress-circle mode="indeterminate" *ngIf="!hideProgress"></md-progress-circle>
+  <md-list-item *ngFor="let fee of fees">
+    <span md-line>{{fee | feeClientLastName}}</span>
+    <span md-line>{{fee.policy.number}}</span>
+    <span md-line>{{fee.value | currency}}</span>
     <a [routerLink]="['policies', fee.policy.objectId]">
-      <button>{{fee | feePolicyIcon}}</button>
+      <button md-icon-button>
+        <md-icon>{{fee | feePolicyIcon}}</md-icon>
+      </button>
     </a>
     <a [routerLink]="['clients', fee.policy.client.objectId]">
-      <button>person</button>
+      <button md-icon-button>
+        <md-icon>person</md-icon>
+      </button>
     </a>
-  </i>
-</ul>
+  </md-list-item>
+</md-nav-list>

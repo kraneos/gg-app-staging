@@ -1,21 +1,25 @@
-<span>Registracion</span>
-<form name="loginForm" #loginForm="ngForm">
-  <p>
-    <input placeholder="Email" [(ngModel)]="email" name="email" type="email" required />
-  </p>
-  <p>
-    <input placeholder="Nombre de Usuario" [(ngModel)]="username" name="username" required />
-  </p>
-  <p>
-    <input placeholder="Password" [(ngModel)]="password" type="password" name="password" required />
-  </p>
-  <p>
-    <input placeholder="Repita la Password" [(ngModel)]="repeatPassword" type="password" name="password" required />
-  </p>
-  <p>
-    <button (click)="register()" [disabled]="!loginForm.form.valid || !segguClient">Crear Usuario</button>
-  </p>
-  <p>
-    <span color="warn" *ngIf="showError">error</span>
-  </p>
-</form>
+<md-card>
+  <md-toolbar color="primary">Registracion</md-toolbar>
+  <md-card-content>
+    <form name="loginForm" #loginForm="ngForm">
+      <p>
+        <md-input placeholder="Email" [(ngModel)]="email" name="email" type="email" required></md-input>
+      </p>
+      <p>
+        <md-input placeholder="Nombre de Usuario" [(ngModel)]="username" name="username" required></md-input>
+      </p>
+      <p>
+        <md-input placeholder="Password" [(ngModel)]="password" type="password" name="password" required></md-input>
+      </p>
+      <p>
+        <md-input placeholder="Repita la Password" [(ngModel)]="repeatPassword" type="password" name="password" required></md-input>
+      </p>
+      <p>
+        <button md-raised-button (click)="register()" [disabled]="!loginForm.form.valid || !segguClient">Crear Usuario</button>
+      </p>
+      <p>
+        <span color="warn" *ngIf="showError">error</span>
+      </p>
+    </form>
+  </md-card-content>
+</md-card>
