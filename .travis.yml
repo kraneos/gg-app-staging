@@ -5,3 +5,7 @@ install:
   - npm install
 script:
   - npm build
+deploy:
+  - npm deploy
+  on:
+    branch: master
