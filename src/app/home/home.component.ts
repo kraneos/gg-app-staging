@@ -43,6 +43,8 @@ export class HomeComponent implements OnInit {
       (day < 10 ? '0' : '') + day;
   }
 
+  testing() { }
+
   filter() {
     this.hideProgress = false;
     this.feesService.query(this.options)
