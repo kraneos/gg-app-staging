@@ -1,17 +1,20 @@
 import { Injectable } from '@angular/core';
-import { Response } from '@angular/http';
 import { Observable } from 'rxjs/Observable';
+import { Response } from '@angular/http';
 
-import { HomeOptions } from '../../home/home-options';
-import { Fee } from '../domain/fee';
 import { ParseService } from './parse.service';
+
+import { Fee } from '../domain/fee';
+import { HomeOptions } from '../domain/home-options';
 
 @Injectable()
 export class FeesService {
   /**
    *
    */
-  constructor(private parseService: ParseService) {
+  constructor(
+    private parseService: ParseService
+  ) {
   }
 
   query(opts: HomeOptions): Observable<Fee[]> {
@@ -19,12 +22,17 @@ export class FeesService {
     url = url + '&include=policy.client,policy.risk';
     url = url + '&order=expirationDate';
     if (opts.date) {
-      var fromDate = new Date(opts.date.getFullYear(), opts.date.getMonth(), opts.date.getDate());
+      let fromDate = new Date(opts.date.getFullYear(), opts.date.getMonth(), opts.date.getDate());
       fromDate.setUTCHours(0);
-      var toDate = new Date(fromDate.valueOf());
+      let toDate = new Date(fromDate.valueOf());
       toDate.setDate(toDate.getDate() + 1);
       toDate.setUTCHours(0);
-      url = url + '&where={"expirationDate":{"$gte":{"__type":"Date","iso":"' + fromDate.toJSON() + '"},"$lt":{"__type":"Date","iso":"' + toDate.toJSON() + '"}}}';
+      url = url +
+        '&where={"expirationDate":{"$gte":{"__type":"Date","iso":"' +
+        fromDate.toJSON() +
+        '"},"$lt":{"__type":"Date","iso":"' +
+        toDate.toJSON() +
+        '"}}}';
     }
     return this.parseService
       .get(url)

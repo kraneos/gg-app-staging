@@ -45,4 +45,19 @@ export class CurrentUserService {
   removePostACL() {
     localStorage.removeItem(this.SEGGU_POST_ACL);
   }
+
+  isProducer(): boolean {
+    let currentUser = this.get();
+    let isProducer = false;
+    currentUser.roles.forEach(role => {
+      if (role.name.indexOf('Clients') === -1) {
+        isProducer = true;
+      }
+    });
+    return isProducer;
+  }
+
+  isClient(): boolean {
+    return !this.isProducer();
+  }
 }

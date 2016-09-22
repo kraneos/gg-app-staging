@@ -1,10 +1,10 @@
-import { AngularSegguPage } from './app.po';
+import { SegguPage } from './app.po';
 
-describe('angular-seggu App', function() {
-  let page: AngularSegguPage;
+describe('seggu App', function() {
+  let page: SegguPage;
 
   beforeEach(() => {
-    page = new AngularSegguPage();
+    page = new SegguPage();
   });
 
   it('should display message saying app works', () => {

@@ -2,28 +2,15 @@ import { Component, OnInit, OnDestroy } from '@angular/core';
 import { Observable } from 'rxjs/Observable';
 import { Router, ActivatedRoute } from '@angular/router';
 
-import { MdToolbar } from '@angular2-material/toolbar';
-import { MdButton } from '@angular2-material/button';
-import { MD_SIDENAV_DIRECTIVES } from '@angular2-material/sidenav';
-import { MD_LIST_DIRECTIVES } from '@angular2-material/list';
-import { MD_CARD_DIRECTIVES } from '@angular2-material/card';
-import { MdInput } from '@angular2-material/input';
-import { MdCheckbox } from '@angular2-material/checkbox';
-import { MdRadioButton, MdRadioGroup } from '@angular2-material/radio';
-import { MdIcon, MdIconRegistry } from '@angular2-material/icon';
-import { ROUTER_DIRECTIVES } from '@angular/router';
-import {MdUniqueSelectionDispatcher} from '@angular2-material/core';
-import {MD_SLIDE_TOGGLE_DIRECTIVES} from '@angular2-material/slide-toggle';
-
 import { CashAccount } from '../shared/domain/cash-account';
+import { Client } from '../shared/domain/client';
+import { Fee } from '../shared/domain/fee';
 import { LedgerAccount } from '../shared/domain/ledger-account';
 import { Asset } from '../shared/domain/asset';
-import { Client } from '../shared/domain/client';
 import { Producer } from '../shared/domain/producer';
-import { Fee } from '../shared/domain/fee';
 import { LedgerAccountsQueryOptions } from '../shared/domain/ledger-accounts-query-options';
 import { AssetsQueryOptions } from '../shared/domain/assets-query-options';
-import { FEE_STATES } from '../shared/domain/enums/fee-states';
+import { FeeStates } from '../shared/domain/enums/fee-states.enum';
 
 import { LedgerAccountsService } from '../shared/services/ledger-accounts.service';
 import { CashAccountsService } from '../shared/services/cash-accounts.service';
@@ -33,34 +20,9 @@ import { CurrentUserService } from '../shared/services/current-user.service';
 import { ProducersService } from '../shared/services/producers.service';
 
 @Component({
-  moduleId: module.id,
   selector: 'app-policies-collect',
-  templateUrl: 'policies-collect.component.html',
-  styleUrls: ['policies-collect.component.css'],
-  directives: [
-    MD_SIDENAV_DIRECTIVES,
-    MD_LIST_DIRECTIVES,
-    MD_CARD_DIRECTIVES,
-    MdToolbar,
-    MdButton,
-    MdInput,
-    MdCheckbox,
-    MdRadioGroup,
-    MdRadioButton,
-    MdIcon,
-    ROUTER_DIRECTIVES,
-    MD_SLIDE_TOGGLE_DIRECTIVES
-  ],
-  providers: [
-    MdIconRegistry,
-    MdUniqueSelectionDispatcher,
-    LedgerAccountsService,
-    AssetsService,
-    CashAccountsService,
-    FeesService,
-    CurrentUserService,
-    ProducersService
-  ]
+  templateUrl: './policies-collect.component.html',
+  styleUrls: ['./policies-collect.component.css']
 })
 export class PoliciesCollectComponent implements OnInit, OnDestroy {
   fee: Fee;
@@ -113,7 +75,7 @@ export class PoliciesCollectComponent implements OnInit, OnDestroy {
   }
 
   fetchCollectionLedgerAccount() {
-    var query = new LedgerAccountsQueryOptions();
+    let query = new LedgerAccountsQueryOptions();
     query.name = this.LEDGER_ACCOUNT_COBRANZA;
     this.ledgerAccountsService
       .query(query)
@@ -124,7 +86,7 @@ export class PoliciesCollectComponent implements OnInit, OnDestroy {
   }
 
   fetchCashAsset() {
-    var query = new AssetsQueryOptions();
+    let query = new AssetsQueryOptions();
     query.name = this.ASSET_EFECTIVO;
     this.assetsService
       .query(query)
@@ -156,7 +118,7 @@ export class PoliciesCollectComponent implements OnInit, OnDestroy {
   }
 
   submit() {
-    var cashAccount = new CashAccount();
+    let cashAccount = new CashAccount();
     cashAccount.amount = this.amount;
     cashAccount.asset = this.cash;
     cashAccount.balance = this.amount;
@@ -171,18 +133,18 @@ export class PoliciesCollectComponent implements OnInit, OnDestroy {
       .post(cashAccount)
       .subscribe(
       res => {
-        this.fee.state = FEE_STATES.PAGADO;
+        this.fee.state = FeeStates.PAGADO;
         this.feesService
-          .put(this.fee.objectId, { state: FEE_STATES.PAGADO })
+          .put(this.fee.objectId, { state: FeeStates.PAGADO })
           .subscribe(
-          res => this.router.navigate(['policies', this.fee.policy.objectId]),
+          () => this.router.navigate(['policies', this.fee.policy.objectId]),
           this.onError);
       },
       this.onError);
   }
 
   getProducerName(prodId) {
-    var prod = this.producers.find(e => e.objectId === prodId);
+    let prod = this.producers.find(e => e.objectId === prodId);
     return prod ? prod.name : null;
   }
 

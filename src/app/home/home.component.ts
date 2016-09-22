@@ -1,49 +1,16 @@
 import { Component, OnInit } from '@angular/core';
 import { Observable } from 'rxjs/Observable';
-import {MdToolbar} from '@angular2-material/toolbar';
-import {MdButton} from '@angular2-material/button';
-import {MD_SIDENAV_DIRECTIVES} from '@angular2-material/sidenav';
-import {MD_LIST_DIRECTIVES} from '@angular2-material/list';
-import {MD_CARD_DIRECTIVES} from '@angular2-material/card';
-import {MdInput} from '@angular2-material/input';
-import {MdCheckbox} from '@angular2-material/checkbox';
-import {MdRadioButton, MdRadioGroup} from '@angular2-material/radio';
-import {MdIcon, MdIconRegistry} from '@angular2-material/icon';
-import { MD_PROGRESS_CIRCLE_DIRECTIVES } from '@angular2-material/progress-circle';
-import { ROUTER_DIRECTIVES } from '@angular/router';
-import {MdUniqueSelectionDispatcher} from '@angular2-material/core';
-
-import { HomeOptions } from './home-options';
-import { Policy } from '../shared/domain/policy';
-import { Fee } from '../shared/domain/fee';
-import { PolicyClientNamePipe } from './policy-client-name.pipe';
-import { FeeClientLastNamePipe } from './fee-client-last-name.pipe';
-import { FeePolicyIconPipe } from './fee-policy-icon.pipe';
 
 import { PoliciesService } from '../shared/services/policies.service';
 import { FeesService } from '../shared/services/fees.service';
 
+import { HomeOptions } from '../shared/domain/home-options';
+import { Fee } from '../shared/domain/fee';
+
 @Component({
-  moduleId: module.id,
   selector: 'app-home',
-  templateUrl: 'home.component.html',
-  styleUrls: ['home.component.css'],
-  directives: [
-    MD_SIDENAV_DIRECTIVES,
-    MD_LIST_DIRECTIVES,
-    MD_CARD_DIRECTIVES,
-    MdToolbar,
-    MdButton,
-    MdInput,
-    MdCheckbox,
-    MdRadioGroup,
-    MdRadioButton,
-    MdIcon,
-    ROUTER_DIRECTIVES,
-    MD_PROGRESS_CIRCLE_DIRECTIVES
-  ],
-  providers: [MdIconRegistry, MdUniqueSelectionDispatcher, PoliciesService, FeesService],
-  pipes: [PolicyClientNamePipe, FeeClientLastNamePipe, FeePolicyIconPipe]
+  templateUrl: './home.component.html',
+  styleUrls: ['./home.component.css']
 })
 export class HomeComponent implements OnInit {
   options: HomeOptions;
@@ -53,7 +20,10 @@ export class HomeComponent implements OnInit {
   dateStr: string;
   hideProgress: boolean;
 
-  constructor(private policiesService: PoliciesService, private feesService: FeesService) { }
+  constructor(
+    private policiesService: PoliciesService,
+    private feesService: FeesService
+  ) { }
 
   ngOnInit() {
     this.options = new HomeOptions();
@@ -68,9 +38,28 @@ export class HomeComponent implements OnInit {
     let year = this.options.date.getFullYear();
     let month = this.options.date.getMonth() + 1;
     let day = this.options.date.getDate();
-    return this.options.date.getFullYear() + '-' +
+    return year + '-' +
       (month < 10 ? '0' : '') + month + '-' +
       (day < 10 ? '0' : '') + day;
+  }
+
+  filter() {
+    this.hideProgress = false;
+    this.feesService.query(this.options)
+      .subscribe(
+      fees => {
+        this.fees = fees;
+        this.hideProgress = true;
+      },
+      error => {
+        this.onError(error);
+        this.hideProgress = true;
+      });
+    this.showOptions = false;
+  }
+
+  onError(error) {
+    return Observable.throw(error.message || error);
   }
 
   onDateChange($event: string) {
@@ -81,33 +70,14 @@ export class HomeComponent implements OnInit {
       this.options.date = null;
       this.dateStr = '';
     } else {
-      var parts = $event.split('-').map(function (e) {
-        return parseInt(e);
+      let parts = $event.split('-').map(function (e) {
+        return parseInt(e, 10);
       });
       this.options.date = new Date(parts[0], parts[1] - 1, parts[2]);
       this.dateStr = this.getDateForInput();
     }
 
     this.filter();
-  }
-
-  onError(error) {
-    return Observable.throw(error.message || error);
-  }
-
-  filter() {
-    this.hideProgress = false;
-    this.feesService.query(this.options)
-      .subscribe(
-      fees => {
-        this.fees = fees
-        this.hideProgress = true;
-      },
-      error => {
-        this.onError(error);
-        this.hideProgress = true;
-      });
-    this.showOptions = false;
   }
 
   previousDate() {

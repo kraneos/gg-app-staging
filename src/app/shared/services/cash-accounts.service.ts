@@ -2,17 +2,16 @@ import { Injectable } from '@angular/core';
 import { Response } from '@angular/http';
 import { Observable } from 'rxjs/Observable';
 
-import { HomeOptions } from '../../home/home-options';
 import { CashAccount } from '../domain/cash-account';
+
 import { ParseService } from './parse.service';
 
 @Injectable()
 export class CashAccountsService {
-  /**
-   *
-   */
-  constructor(private parseService: ParseService) {
-  }
+
+  constructor(
+    private parseService: ParseService
+  ) { }
 
   post(obj: CashAccount): Observable<Response> {
     let url = 'classes/CashAccount';

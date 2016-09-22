@@ -1,21 +1,17 @@
 import { Injectable } from '@angular/core';
-import { Response } from '@angular/http';
-import {Observable} from 'rxjs/Observable';
-import 'rxjs/add/observable/fromEvent';
-import 'rxjs/add/operator/catch';
+import { Observable } from 'rxjs/Observable';
 
-import { HomeOptions } from '../../home/home-options';
 import { Asset } from '../domain/asset';
 import { AssetsQueryOptions } from '../domain/assets-query-options';
+
 import { ParseService } from './parse.service';
 
 @Injectable()
 export class AssetsService {
-  /**
-   *
-   */
-  constructor(private parseService: ParseService) {
-  }
+
+  constructor(
+    private parseService: ParseService
+  ) { }
 
   query(options: AssetsQueryOptions): Observable<Asset[]> {
     let url = 'classes/Asset?skip=0';

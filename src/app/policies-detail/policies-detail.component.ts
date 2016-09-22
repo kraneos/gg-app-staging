@@ -1,17 +1,6 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
 import { Observable } from 'rxjs/Observable';
 import { Router, ActivatedRoute } from '@angular/router';
-import { MdToolbar } from '@angular2-material/toolbar';
-import { MdButton } from '@angular2-material/button';
-import { MD_SIDENAV_DIRECTIVES } from '@angular2-material/sidenav';
-import { MD_LIST_DIRECTIVES } from '@angular2-material/list';
-import { MD_CARD_DIRECTIVES } from '@angular2-material/card';
-import { MdInput } from '@angular2-material/input';
-import { MdCheckbox } from '@angular2-material/checkbox';
-import { MdRadioButton, MdRadioGroup } from '@angular2-material/radio';
-import { MdIcon, MdIconRegistry } from '@angular2-material/icon';
-import { ROUTER_DIRECTIVES } from '@angular/router';
-import {MdUniqueSelectionDispatcher} from '@angular2-material/core';
 
 import { Risk } from '../shared/domain/risk';
 import { Company } from '../shared/domain/company';
@@ -20,44 +9,19 @@ import { Vehicle } from '../shared/domain/vehicle';
 import { Integral } from '../shared/domain/integral';
 import { Employee } from '../shared/domain/employee';
 import { Fee } from '../shared/domain/fee';
+import { FeeStates } from '../shared/domain/enums/fee-states.enum';
 
 import { PoliciesService } from '../shared/services/policies.service';
 import { VehiclesService } from '../shared/services/vehicles.service';
 import { IntegralsService } from '../shared/services/integrals.service';
 import { EmployeesService } from '../shared/services/employees.service';
 import { FeesService } from '../shared/services/fees.service';
-
-import { FeeStatusNamePipe } from './fee-status-name.pipe';
+import { CurrentUserService } from '../shared/services/current-user.service';
 
 @Component({
-  moduleId: module.id,
   selector: 'app-policies-detail',
-  templateUrl: 'policies-detail.component.html',
-  styleUrls: ['policies-detail.component.css'],
-  directives: [
-    MD_SIDENAV_DIRECTIVES,
-    MD_LIST_DIRECTIVES,
-    MD_CARD_DIRECTIVES,
-    MdToolbar,
-    MdButton,
-    MdInput,
-    MdCheckbox,
-    MdRadioGroup,
-    MdRadioButton,
-    MdIcon,
-    ROUTER_DIRECTIVES
-  ],
-  providers: [
-    MdIconRegistry,
-    MdUniqueSelectionDispatcher,
-    PoliciesService,
-    FeesService,
-    VehiclesService,
-    IntegralsService,
-    EmployeesService],
-  pipes: [
-    FeeStatusNamePipe
-  ]
+  templateUrl: './policies-detail.component.html',
+  styleUrls: ['./policies-detail.component.css']
 })
 export class PoliciesDetailComponent implements OnInit, OnDestroy {
   policy: Policy;
@@ -66,6 +30,7 @@ export class PoliciesDetailComponent implements OnInit, OnDestroy {
   integrals: Integral[];
   employees: Employee[];
   hideProgress: boolean;
+  isProducer: boolean;
   private sub: any;
   private VEHICLE_RISK_TYPES = [1];
   private INTEGRAL_RISK_TYPES = [2];
@@ -78,7 +43,10 @@ export class PoliciesDetailComponent implements OnInit, OnDestroy {
     private vehiclesService: VehiclesService,
     private integralsService: IntegralsService,
     private employeesService: EmployeesService,
-    private feesService: FeesService) { }
+    private feesService: FeesService,
+    private currentUserService: CurrentUserService
+  ) { }
+
 
   ngOnInit() {
     this.policy = new Policy();
@@ -88,6 +56,7 @@ export class PoliciesDetailComponent implements OnInit, OnDestroy {
     this.employees = [];
     this.integrals = [];
     this.fees = [];
+    this.isProducer = this.currentUserService.isProducer();
 
     this.sub = this.route.params.subscribe(params => {
       let id = params['id'];
@@ -98,7 +67,7 @@ export class PoliciesDetailComponent implements OnInit, OnDestroy {
           this.feesService.queryByPolicy(id)
             .subscribe(
             fees => {
-              this.fees = fees
+              this.fees = fees;
               this.hideProgress = this.fees !== null && (this.vehicles !== null || this.employees !== null || this.integrals !== null);
             },
             error => {
@@ -110,7 +79,7 @@ export class PoliciesDetailComponent implements OnInit, OnDestroy {
             this.vehiclesService.query(id)
               .subscribe(
               vehicles => {
-                this.vehicles = vehicles
+                this.vehicles = vehicles;
                 this.hideProgress = this.fees !== null && (this.vehicles !== null || this.employees !== null || this.integrals !== null);
               },
               error => {
@@ -121,7 +90,7 @@ export class PoliciesDetailComponent implements OnInit, OnDestroy {
             this.integralsService.query(id)
               .subscribe(
               integrals => {
-                this.integrals = integrals
+                this.integrals = integrals;
                 this.hideProgress = this.fees !== null && (this.vehicles !== null || this.employees !== null || this.integrals !== null);
               },
               error => {
@@ -132,7 +101,7 @@ export class PoliciesDetailComponent implements OnInit, OnDestroy {
             this.employeesService.query(id)
               .subscribe(
               employees => {
-                this.employees = employees
+                this.employees = employees;
                 this.hideProgress = this.fees !== null && (this.vehicles !== null || this.employees !== null || this.integrals !== null);
               },
               error => {
@@ -158,5 +127,37 @@ export class PoliciesDetailComponent implements OnInit, OnDestroy {
 
   private validateAgainstArray(values: number[], value: number) {
     return values.indexOf(value) > -1;
+  }
+
+  collect(fee: Fee, index: number) {
+    if (this.validateCurrentFeeState(fee)) {
+      if (index > 0) {
+        let prevFee = this.fees[index - 1];
+        if (!this.validateCurrentFeeState(prevFee)) {
+          this.router.navigate(['/policies', fee.policy.objectId, 'fees', fee.objectId, 'collect']);
+        } else {
+          alert('Verifique el estado de la cuota anterior.');
+        }
+      } else {
+        this.router.navigate(['/policies', fee.policy.objectId, 'fees', fee.objectId, 'collect']);
+      }
+    } else {
+      alert('Verifique el estado de la cuota seleccionada.');
+    }
+  }
+
+  validateCurrentFeeState(fee: Fee) {
+    switch (fee.state) {
+      case FeeStates.DEBE: return true;
+      case FeeStates.LIQUIDADO: return false;
+      case FeeStates.OBSERVADO: return true;
+      case FeeStates.PAGADO: return false;
+      case FeeStates.PRELIQUIDADO: return false;
+      case FeeStates.MANTENER_CUBIERTO: return true;
+      case FeeStates.MOROSO: return true;
+      case FeeStates.SIN_COBERTURA: return true;
+      case FeeStates.DEBE_Y_PRELIQUIDADO: return true;
+      default: return false;
+    }
   }
 }

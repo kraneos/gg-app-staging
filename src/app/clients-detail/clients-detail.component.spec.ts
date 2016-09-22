@@ -1,20 +1,11 @@
 /* tslint:disable:no-unused-variable */
 
-import { By }           from '@angular/platform-browser';
-import { DebugElement } from '@angular/core';
-
-import {
-  beforeEach, beforeEachProviders,
-  describe, xdescribe,
-  expect, it, xit,
-  async, inject
-} from '@angular/core/testing';
-
+import { TestBed, async } from '@angular/core/testing';
 import { ClientsDetailComponent } from './clients-detail.component';
 
 describe('Component: ClientsDetail', () => {
   it('should create an instance', () => {
-    // let component = new ClientsDetailComponent();
-    // expect(component).toBeTruthy();
+    let component = new ClientsDetailComponent();
+    expect(component).toBeTruthy();
   });
 });

@@ -1,9 +1,6 @@
 <md-toolbar color="primary">
   <span>Debe</span>
   <span class="fill-remaining"></span>
-  <!--<button md-fab color="accent" (click)="showOptions = !showOptions" *ngIf="!showOptions">
-    <md-icon class="md-24">filter_list</md-icon>
-  </button>-->
 </md-toolbar>
 <section>
   <form>
@@ -15,7 +12,6 @@
           </button>
         </td>
         <td>
-          <!--<input type="date" name="fecha2" [ngModel]="dateStr" (ngModelChange)="onDateChange($event)">-->
           <md-input placeholder="Fecha" [ngModel]="dateStr" (ngModelChange)="onDateChange($event)" type="date" name="fecha"></md-input>
         </td>
         <td>
@@ -29,7 +25,6 @@
 </section>
 <md-nav-list>
   <md-list-item *ngIf="showOptions">
-    <!--<md-input placeholder="Nro Poliza" [(ngModel)]="options.number"></md-input>-->
     <md-input placeholder="Pagina" [(ngModel)]="options.page" type="number" min="1"></md-input>
     <md-radio-group [(ngModel)]="options.limit">
       <md-radio-button value="5">5</md-radio-button>
@@ -38,9 +33,6 @@
     </md-radio-group>
     <button md-raised-button (click)="filter()">Buscar</button>
   </md-list-item>
-  <!--<md-list-item *ngFor="let fee of fees">-->
-  <!--<md-icon md-list-icon *ngIf="policy.icon === 2">user</md-icon>
-    <md-icon md-list-icon *ngIf="policy.icon === 3">car</md-icon>-->
   <md-progress-circle mode="indeterminate" *ngIf="!hideProgress"></md-progress-circle>
   <md-list-item *ngFor="let fee of fees">
     <span md-line>{{fee | feeClientLastName}}</span>

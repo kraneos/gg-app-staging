@@ -1,42 +1,15 @@
 import { Component, OnInit } from '@angular/core';
-import { ROUTER_DIRECTIVES, Router } from '@angular/router';
+
+import { Router } from '@angular/router';
 import { Observable } from 'rxjs/Observable';
-import {MdToolbar} from '@angular2-material/toolbar';
-import {MdButton} from '@angular2-material/button';
-import {MD_SIDENAV_DIRECTIVES} from '@angular2-material/sidenav';
-import {MD_LIST_DIRECTIVES} from '@angular2-material/list';
-import {MD_CARD_DIRECTIVES} from '@angular2-material/card';
-import {MdInput} from '@angular2-material/input';
-import {MdCheckbox} from '@angular2-material/checkbox';
-import {MdRadioButton, MdRadioGroup} from '@angular2-material/radio';
-import {MdIcon, MdIconRegistry} from '@angular2-material/icon';
-import {MdUniqueSelectionDispatcher} from '@angular2-material/core';
 
 import { LoginService } from '../shared/services/login.service';
 import { CurrentUserService } from '../shared/services/current-user.service';
 
 @Component({
-  moduleId: module.id,
   selector: 'app-login',
-  templateUrl: 'login.component.html',
-  styleUrls: ['login.component.css'],
-  directives: [
-    MD_SIDENAV_DIRECTIVES,
-    MD_LIST_DIRECTIVES,
-    MD_CARD_DIRECTIVES,
-    MdToolbar,
-    MdButton,
-    MdInput,
-    MdCheckbox,
-    MdRadioGroup,
-    MdRadioButton,
-    MdIcon,
-    ROUTER_DIRECTIVES
-  ],
-  providers: [
-    LoginService,
-    CurrentUserService
-  ],
+  templateUrl: './login.component.html',
+  styleUrls: ['./login.component.css']
 })
 export class LoginComponent implements OnInit {
   username: string;
@@ -47,7 +20,8 @@ export class LoginComponent implements OnInit {
   constructor(
     private router: Router,
     private loginService: LoginService,
-    private currentUserService: CurrentUserService) { }
+    private currentUserService: CurrentUserService
+  ) { }
 
   ngOnInit() {
     this.showError = false;
@@ -76,13 +50,13 @@ export class LoginComponent implements OnInit {
                 this.loginService
                   .getRolesBySegguClient(segguClient)
                   .subscribe(
-                  roles => {
+                  rolesBySegguClient => {
                     let postACL = {};
 
                     // Guarda los roles y el usuario como el ACL para los registros que se guarden por la app.
                     postACL[user.objectId] = { read: true, write: true };
 
-                    roles.forEach(function (r) {
+                    rolesBySegguClient.forEach(function (r) {
                       postACL['role:' + r.name] = { read: true, write: true };
                     });
                     this.currentUserService.setPostACL(postACL);
@@ -90,7 +64,7 @@ export class LoginComponent implements OnInit {
                     if (notClient) {
                       this.router.navigate(['/']);
                     } else {
-                      this.router.navigate(['/policies']);
+                      this.router.navigate(['/client-policies']);
                     }
                   },
                   onError
@@ -98,7 +72,7 @@ export class LoginComponent implements OnInit {
               },
               onError
               );
-          })
+          });
       },
       onError
       );

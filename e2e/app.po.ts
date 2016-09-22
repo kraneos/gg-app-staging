@@ -1,4 +1,6 @@
-export class AngularSegguPage {
+import { browser, element, by } from 'protractor/globals';
+
+export class SegguPage {
   navigateTo() {
     return browser.get('/');
   }

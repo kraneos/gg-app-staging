@@ -1,15 +1,14 @@
 import { Injectable } from '@angular/core';
-import { Http, Request, RequestOptionsArgs, Response, ConnectionBackend, RequestOptions, Headers } from '@angular/http';
-import {Observable} from 'rxjs/Observable';
-import 'rxjs/add/observable/fromEvent';
-import 'rxjs/add/operator/catch';
+import { Http, Response, RequestOptionsArgs, RequestOptions, Headers } from '@angular/http';
+import { Observable } from 'rxjs/Observable';
 import 'rxjs/Rx';
-import { CurrentUser } from '../domain/current-user';
-import { CurrentUserService } from '../services/current-user.service';
-import { environment } from '../../environment';
+
+import { environment } from '../../../environments/environment';
+
+import { CurrentUserService } from './current-user.service';
 
 @Injectable()
-export abstract class ParseService {
+export class ParseService {
     /**
      *
      */
@@ -45,8 +44,8 @@ export abstract class ParseService {
         return environment.parseUrl + url;
     }
     private getOptions(options?: RequestOptionsArgs) {
-        var opts = options || new RequestOptions({ headers: new Headers() });
-        opts.headers.append('X-Parse-Application-Id', 'seggu-api');
+        let opts = options || new RequestOptions({ headers: new Headers() });
+        opts.headers.append('X-Parse-Application-Id', environment.parseAppId);
         let userStr = localStorage.getItem('segguUser');
         let user = JSON.parse(userStr);
         if (user) {
@@ -55,12 +54,12 @@ export abstract class ParseService {
         return opts;
     }
     private applyACL(body: any) {
-      var postACL = this.currentUserService.getPostACL();
+        let postACL = this.currentUserService.getPostACL();
 
-      if (postACL && body) {
-        body.ACL = postACL;
-      }
+        if (postACL && body) {
+            body.ACL = postACL;
+        }
 
-      return body;
+        return body;
     }
 }
