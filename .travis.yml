@@ -7,7 +7,7 @@ script:
   - npm build
 deploy:
   provider: script
-  script: npm deploy
+  script: npm run deploy
   skip_cleanup: true
   on:
     branch: master
