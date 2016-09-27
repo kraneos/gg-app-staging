@@ -1,0 +1,12 @@
+language: node_js
+node_js:
+  - "node"
+install:
+  - npm install
+script:
+  - npm build
+deploy:
+  provider: script
+  script: npm deploy
+  on:
+    branch: master
