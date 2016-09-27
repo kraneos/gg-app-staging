@@ -8,5 +8,6 @@ script:
 deploy:
   provider: script
   script: npm deploy
+  skip_cleanup: true
   on:
     branch: master
