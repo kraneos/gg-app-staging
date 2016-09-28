@@ -23,7 +23,7 @@ if [ "$TRAVIS_BRANCH" == "$SOURCE_BRANCH_STAGING" ]; then
 
   # Clone the existing gh-pages for this repo into out/
   # Create a new empty branch if gh-pages doesn't exist yet (should only happen on first deply)
-  git clone $SSH_TARGET_REPO out
+  git clone $SSH_TARGET_REPO_STAGING out
   cd out
   git checkout $TARGET_BRANCH || git checkout --orphan $TARGET_BRANCH
   cd ..
