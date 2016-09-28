@@ -4,7 +4,7 @@
 // The list of which env maps to which file can be found in `angular-cli.json`.
 
 export const environment = {
-  production: false,
+  production: true,
   parseUrl: 'http://api.seggu.com.ar/parse/',
   parseAppId: 'seggu-api',
   registrationUrl: 'http://api.seggu.com.ar/register-client',
