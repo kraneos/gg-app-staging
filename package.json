@@ -5,11 +5,13 @@
   "angular-cli": {},
   "scripts": {
     "start": "ng serve",
+    "build": "ng build",
     "lint": "tslint \"src/**/*.ts\"",
     "test": "ng test",
     "pree2e": "webdriver-manager update",
     "e2e": "protractor",
-    "deploy": "ng github-pages:deploy --base-href /"
+    "deploy-prod": "ng github-pages:deploy --base-href /",
+    "deploy-staging": "ng b --env=stag --output-path out/"
   },
   "private": true,
   "dependencies": {
